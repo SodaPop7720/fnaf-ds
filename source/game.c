@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <stdbool.h>
 #include <time.h>
+#include <math.h>
 
 #include <nds.h>
 #include <filesystem.h>
@@ -96,10 +97,11 @@ int onCreate()
     
     NF_EnableSpriteRotScale(0, 0, 0, false);
     
-    NF_LoadTextFont("fnt/default", "normal", 256, 256, 0);
+    NF_LoadTextFont("fnt/default", "top", 256, 256, 0);
+    NF_LoadTextFont("fnt/default", "bottom", 256, 256, 0);
     
-    NF_CreateTextLayer(0, 0, 0, "normal");
-    NF_CreateTextLayer(1, 0, 0, "normal");
+    NF_CreateTextLayer(0, 0, 0, "top");
+    NF_CreateTextLayer(1, 0, 0, "bottom");
 
     return 0;
 }
@@ -119,6 +121,8 @@ int onPostCreate()
 int officeX = 50;
 float camX = 25;
 int scrollSpeed = 3;
+float power = 100;
+int usage = 1;
 
 bool usingCams = false;
 float camSpeed = 0.2;
@@ -144,17 +148,6 @@ int onUpdate()
         scanKeys();
         uint16_t keys_down = keysDown();
         uint16_t keys_held = keysHeld();
-
-        char mytext[64];
-        snprintf(mytext, sizeof(mytext), "\n\n\n\n\n\n X: %u     \n Y: %u     ", touch_position.px, touch_position.py);
-        // NF_WriteText(0, 0, 1, 1, mytext); // dont forget to comment this out later
-
-        if (!usingCams) // yes the spaces are required because the ds is weird
-            NF_WriteText(1, 0, 1, 1, "Controls:\n L and R: Look Around         \n A: Close Door     \n B: Check Lights \n Up: Open Camera");
-        else
-            NF_WriteText(1, 0, 1, 1, "Controls:\n Touch Screen: Switch Cameras \n Up: Close Camera  \n                 \n                ");
-        
-        NF_UpdateTextLayers();
 
         if (camGoLeft)
             camX -= camSpeed;
@@ -391,6 +384,44 @@ int onUpdate()
 
         NF_SpriteRotScale(0, 0, 0, 96, 96);
         NF_SpriteFrame(0, 0, timeAM);
+
+        usage = 1;
+
+        if(ldoorlight || rdoorlight)
+        {
+            usage += 1;
+        }
+        if(ldoor)
+        {
+            usage += 1;
+        }
+        if(rdoor)
+        {
+            usage += 1;
+        }
+        if(usingCams)
+        {
+            usage += 1;
+        }
+
+        power -= 0.0015 * usage;
+        if (power < 0)
+            power = 0;
+        
+        char mytext[64];
+        snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d     ", ceil(power - 1), usage);
+        NF_WriteText(0, 0, 1, 1, mytext); // dont forget to comment this out later
+
+        if (!usingCams) // yes the spaces are required because the ds is weird
+        {
+            NF_WriteText(1, 0, 1, 1, "Controls:\n L and R: Look Around         \n A: Close Door     \n B: Check Lights \n Up: Open Camera");
+        }
+        else
+        {
+            NF_WriteText(1, 0, 1, 1, "Controls:\n Touch Screen: Switch Cameras \n Up: Close Camera  \n                 \n                ");
+        }
+        
+        NF_UpdateTextLayers();
 
         swiWaitForVBlank();
         
