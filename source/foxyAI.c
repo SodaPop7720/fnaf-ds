@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> 
+#include <stdbool.h>
 #include <time.h>
 
 #include <nds.h>
@@ -12,26 +13,31 @@
 #endif
 
 #include "daTime.h"
+#include "foxyAI.h"
 #include "game.h"
 
-int timeAM = 0;
+int foxyPhase = 0;
 
-int daTimeShit()
+int foxyTime()
 {
     static time_t last = 0;
     time_t now = time(NULL);
     if (last == 0) last = now;
+    
+    if (usingCams)
+        last = now;
 
-    if (difftime(now, last) >= 90.0)
+    if (difftime(now, last) >= 5.01)
     {
-        timeAM += 1;
-        if (timeAM == 3)
-            foxyAILevel += 1;
-
-        if (timeAM == 4)
-            foxyAILevel += 1;
+        if (!usingCams)
+        {
+            if (rand() % 20 <= foxyAILevel)
+            {
+                foxyPhase += 1;
+            }
+        }
         last = now;
     }
-
-    return 0;
+    
+    return foxyPhase;
 }

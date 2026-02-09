@@ -9,8 +9,11 @@
 
 #include <nf_lib.h>
 
-#include "game.h"
 #include "daTime.h"
+#include "foxyAI.h"
+#include "game.h"
+
+int foxyAILevel = 20;
 
 int onCreate()
 {
@@ -140,6 +143,22 @@ bool prev_rdoor = false;
 bool prev_rdoorlight = false;
 
 touchPosition touch_position = { 0 };
+
+// fixes an issue where the image doesnt update when someone moves
+int checkAnimatronics()
+{
+    if (camName == "cam1c" || camName == "cam1c_1" || camName == "cam1c_2" || camName == "cam1c_3")
+    {
+        if(foxyPhase == 0)
+            camName = "cam1c";
+        else if(foxyPhase == 1)
+            camName = "cam1c_1";
+        else if(foxyPhase == 2)
+            camName = "cam1c_2";
+        else if(foxyPhase >= 3)
+            camName = "cam1c_3";
+    }
+}
 
 int onUpdate()
 {
@@ -275,6 +294,8 @@ int onUpdate()
             prev_rdoor = rdoor;
         }
 
+        checkAnimatronics();
+
         if (keys_down & KEY_UP)
         {
             NF_PlayRawSound(3, 127, 64, false, 0);
@@ -286,6 +307,7 @@ int onUpdate()
             if (usingCams)
             {
                 NF_HideBg(0, 1);
+                NF_ShowBg(0, 2);
                 NF_ShowBg(1, 3);
 
                 NF_CreateTiledBg(0, 3, camName);
@@ -293,6 +315,7 @@ int onUpdate()
             else
             {
                 NF_ShowBg(0, 1);
+                NF_HideBg(0, 2);
                 NF_HideBg(1, 3);
 
                 NF_CreateTiledBg(0, 3, "office_off");
@@ -311,7 +334,7 @@ int onUpdate()
                 if (touch_position.px > 86 && touch_position.py > 18 && touch_position.px < 103 && touch_position.py < 27)
                 {
                     NF_PlayRawSound(4, 127, 64, false, 0);
-                    camName = "cam1a_fbc";
+                    camName = "cam1a";
                 }
                 if (touch_position.px > 78 && touch_position.py > 39 && touch_position.px < 94 && touch_position.py < 48)
                 {
@@ -364,6 +387,7 @@ int onUpdate()
                     camName = "cam7";
                 }
 
+                checkAnimatronics();
                 NF_CreateTiledBg(0, 3, camName);
             }
         }
@@ -378,6 +402,8 @@ int onUpdate()
             NF_ScrollBg(0, 3, (camX * 2), 160);
         }
         
+        foxyTime();
+
         daTimeShit();
         if (timeAM > 5)
             break;
@@ -408,9 +434,9 @@ int onUpdate()
         if (power < 0)
             power = 0;
         
-        char mytext[64];
+        char mytext[128];
         snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d     ", ceil(power - 1), usage);
-        NF_WriteText(0, 0, 1, 1, mytext); // dont forget to comment this out later
+        NF_WriteText(0, 0, 1, 1, mytext);
 
         if (!usingCams) // yes the spaces are required because the ds is weird
         {
@@ -436,8 +462,5 @@ int onUpdate()
 
 int noScreenRefresh()
 {
-    while (1)
-    {
-        
-    }
+    return 0;
 }

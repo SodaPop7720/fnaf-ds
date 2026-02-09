@@ -1,4 +1,4 @@
-build/fnaf_ds/source/game.c.o: source/game.c \
+build/fnaf_ds/source/foxyAI.c.o: source/foxyAI.c \
  C:/msys64/opt/wonderful/thirdparty/blocksds/core/libs/libnds/include/nds.h \
  C:/msys64/opt/wonderful/thirdparty/blocksds/core/libs/libnds/include/nds/bios.h \
  C:/msys64/opt/wonderful/thirdparty/blocksds/core/libs/libnds/include/nds/ndstypes.h \
