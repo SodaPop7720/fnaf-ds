@@ -33,6 +33,8 @@ int onCreate()
     NF_LoadTiledBg("bg/office", "office_off", 512, 512);
     NF_LoadTiledBg("bg/officeLeftLight", "office_left", 512, 512);
     NF_LoadTiledBg("bg/officeRightLight", "office_right", 512, 512);
+    NF_LoadTiledBg("bg/officePowerOut", "office_power", 512, 512);
+    NF_LoadTiledBg("bg/officePowerOutFreddy", "office_powerfred", 512, 512);
     NF_CreateTiledBg(0, 3, "office_off");
     NF_ScrollBg(0, 3, 100, 160);
 

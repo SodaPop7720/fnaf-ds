@@ -17,6 +17,7 @@
 #include "game.h"
 
 int foxyPhase = 0;
+double foxyStall = 0.0;
 
 int foxyTime()
 {
@@ -25,9 +26,12 @@ int foxyTime()
     if (last == 0) last = now;
     
     if (usingCams)
+    {
         last = now;
+        foxyStall = .83 + ((double)rand() * 17.43 / (double)RAND_MAX);
+    }
 
-    if (difftime(now, last) >= 5.01)
+    if (difftime(now, last) >= 5.01 + foxyStall)
     {
         if (!usingCams)
         {
