@@ -21,17 +21,17 @@ double foxyStall = 0.0;
 
 int foxyTime()
 {
-    static time_t last = 0;
-    time_t now = time(NULL);
-    if (last == 0) last = now;
+    static time_t foxylast = 0;
+    time_t foxynow = time(NULL);
+    if (foxylast == 0) foxylast = foxynow;
     
     if (usingCams)
     {
-        last = now;
+        foxylast = foxynow;
         foxyStall = .83 + ((double)rand() * 17.43 / (double)RAND_MAX);
     }
 
-    if (difftime(now, last) >= 5.01 + foxyStall)
+    if (difftime(foxynow, foxylast) >= 5.01 + foxyStall)
     {
         if (!usingCams)
         {
@@ -40,7 +40,7 @@ int foxyTime()
                 foxyPhase += 1;
             }
         }
-        last = now;
+        foxylast = foxynow;
     }
     
     return foxyPhase;

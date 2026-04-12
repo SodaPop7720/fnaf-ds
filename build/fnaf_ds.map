@@ -3304,7 +3304,8 @@ ARM.exidx       0x02018794        0x8
  .bss.timeAM    0x02018cc8        0x4 build/fnaf_ds/source/daTime.c.o
                 0x02018cc8                timeAM
  *fill*         0x02018ccc        0x4 
- .bss.last.0    0x02018cd0        0x8 build/fnaf_ds/source/foxyAI.c.o
+ .bss.foxylast.0
+                0x02018cd0        0x8 build/fnaf_ds/source/foxyAI.c.o
  .bss.foxyStall
                 0x02018cd8        0x8 build/fnaf_ds/source/foxyAI.c.o
                 0x02018cd8                foxyStall
