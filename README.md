@@ -7,4 +7,5 @@ made using BlocksDS and NFLib
 * Let foxy kill you
 * Add nights
 * Make a win condition
+* Finish menu (all options count as new game)
 * Add custom night
