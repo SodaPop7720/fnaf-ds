@@ -1,6 +1,6 @@
 # fnaf-ds
 
-made using BlockSDS and NFLib
+made using BlocksDS and NFLib
 
 # todo list
 * Make bonnie, chica, and freddy move

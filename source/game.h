@@ -6,7 +6,12 @@
 
 extern int foxyAILevel;
 
+extern bool foxyRunning;
+
 extern bool usingCams;
+extern const char* camName;
+
+extern int foxyAttack();
 
 int onCreate();
 int onPostCreate();

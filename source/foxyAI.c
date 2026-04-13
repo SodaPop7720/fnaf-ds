@@ -21,17 +21,24 @@ double foxyStall = 0.0;
 
 int foxyTime()
 {
+    time_t foxyTimer = time(NULL);
+
     static time_t foxylast = 0;
-    time_t foxynow = time(NULL);
-    if (foxylast == 0) foxylast = foxynow;
+    if (foxylast == 0) foxylast = foxyTimer;
+
+    static time_t foxykilllast = 0;
+    if (foxykilllast == 0) foxykilllast = foxyTimer;
+
+    static time_t foxyrunlast = 0;
+    if (foxyrunlast == 0) foxyrunlast = foxyTimer;
     
     if (usingCams)
     {
-        foxylast = foxynow;
+        foxylast = foxyTimer;
         foxyStall = .83 + ((double)rand() * 17.43 / (double)RAND_MAX);
     }
 
-    if (difftime(foxynow, foxylast) >= 5.01 + foxyStall)
+    if (difftime(foxyTimer, foxylast) >= 5.01 + foxyStall)
     {
         if (!usingCams)
         {
@@ -39,8 +46,31 @@ int foxyTime()
             {
                 foxyPhase += 1;
             }
+            foxyStall = 0;
         }
-        foxylast = foxynow;
+        foxylast = foxyTimer;
+    }
+
+    if (foxyPhase < 3)
+    {
+        foxykilllast = foxyTimer;
+    }
+
+    if (!foxyRunning)
+    {
+        foxyrunlast = foxyTimer;
+    }
+
+    if (difftime(foxyTimer, foxykilllast) >= 25)
+    {
+        foxyAttack();
+        foxykilllast = foxyTimer;
+    }
+
+    if (difftime(foxyTimer, foxyrunlast) >= 2)
+    {
+        foxyAttack();
+        foxyrunlast = foxyTimer;
     }
     
     return foxyPhase;

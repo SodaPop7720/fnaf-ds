@@ -13,6 +13,8 @@
 #include "foxyAI.h"
 #include "game.h"
 
+// Not my best code ever I know the codes a little bad yeah
+
 int foxyAILevel = 20;
 
 int onCreate()
@@ -119,6 +121,8 @@ int onPostCreate()
     NF_LoadRawSound("sfx/door", 2, 11025, 0);
     NF_LoadRawSound("sfx/flip", 3, 11025, 0);
     NF_LoadRawSound("sfx/blip", 4, 11025, 0);
+    NF_LoadRawSound("sfx/knock", 5, 11025, 0);
+    NF_LoadRawSound("sfx/run", 6, 11025, 0); 
 
     return 0;
 }
@@ -128,6 +132,8 @@ float camX = 25;
 int scrollSpeed = 3;
 float power = 100;
 int usage = 1;
+
+bool foxyRunning = false;
 
 bool usingCams = false;
 float camSpeed = 0.2;
@@ -144,21 +150,43 @@ bool prev_ldoorlight = false;
 bool prev_rdoor = false;
 bool prev_rdoorlight = false;
 
+bool gotJumped = false;
+
 touchPosition touch_position = { 0 };
+
+int foxyAttack()
+{
+    if (ldoor)
+    {
+        NF_PlayRawSound(5, 100, 64, false, 0);
+        foxyPhase = 0;
+        foxyRunning = false;
+    }
+    else
+    {
+        gotJumped = true;
+    }
+}
 
 // fixes an issue where the image doesnt update when someone moves
 int checkAnimatronics()
 {
     if (camName == "cam1c" || camName == "cam1c_1" || camName == "cam1c_2" || camName == "cam1c_3")
     {
-        if(foxyPhase == 0)
-            camName = "cam1c";
-        else if(foxyPhase == 1)
-            camName = "cam1c_1";
-        else if(foxyPhase == 2)
-            camName = "cam1c_2";
-        else if(foxyPhase >= 3)
-            camName = "cam1c_3";
+        switch(foxyPhase)
+        {
+            case 0: camName = "cam1c";
+            case 1: camName = "cam1c_1";
+            case 2: camName = "cam1c_2";
+            default: camName = "cam1c_3";
+        }
+    }
+    
+    if (camName == "cam2a" && foxyPhase >= 3)
+    {
+        camName = "cam6";
+        foxyRunning = true;
+        NF_PlayRawSound(6, 100, 64, false, 0);
     }
 }
 
