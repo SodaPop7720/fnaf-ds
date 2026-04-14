@@ -12,6 +12,7 @@
 #include "daTime.h"
 #include "foxyAI.h"
 #include "game.h"
+#include "gameover.h"
 
 // Not my best code ever I know the codes a little bad yeah
 
@@ -35,6 +36,8 @@ int onCreate()
     NF_LoadTiledBg("bg/office", "office_off", 512, 512);
     NF_LoadTiledBg("bg/officeLeftLight", "office_left", 512, 512);
     NF_LoadTiledBg("bg/officeRightLight", "office_right", 512, 512);
+    NF_LoadTiledBg("bg/officeBonnie", "office_bonnie", 512, 512);
+    NF_LoadTiledBg("bg/officeChica", "office_chica", 512, 512);
     NF_LoadTiledBg("bg/officePowerOut", "office_power", 512, 512);
     NF_LoadTiledBg("bg/officePowerOutFreddy", "office_powerfred", 512, 512);
     NF_CreateTiledBg(0, 3, "office_off");
@@ -434,6 +437,9 @@ int onUpdate()
         
         foxyTime();
 
+        if (gotJumped)
+            break;
+
         daTimeShit();
         if (timeAM > 5)
             break;
@@ -487,6 +493,85 @@ int onUpdate()
         oamUpdate(&oamSub);
     }
     
+    NF_DeleteTiledBg(0, 1);
+    NF_DeleteTiledBg(0, 3);
+    NF_DeleteTiledBg(1, 3);
+
+    NF_UnloadTiledBg("office_off");
+    NF_UnloadTiledBg("office_left");
+    NF_UnloadTiledBg("office_right");
+    NF_UnloadTiledBg("office_bonnie");
+    NF_UnloadTiledBg("office_chica");
+    NF_UnloadTiledBg("office_power");
+    NF_UnloadTiledBg("office_powerfred");
+
+    NF_UnloadTiledBg("doors_off");
+    NF_UnloadTiledBg("doors_L");
+    NF_UnloadTiledBg("doors_R");
+    NF_UnloadTiledBg("doors_LR");
+    
+    NF_UnloadTiledBg("cam1a");
+    NF_UnloadTiledBg("cam1a_fbc");
+    NF_UnloadTiledBg("cam1a_fb");
+    NF_UnloadTiledBg("cam1a_fc");
+    NF_UnloadTiledBg("cam1a_f");
+
+    NF_UnloadTiledBg("cam1b");
+    NF_UnloadTiledBg("cam1b_b");
+    NF_UnloadTiledBg("cam1b_c");
+    NF_UnloadTiledBg("cam1b_f");
+
+    NF_UnloadTiledBg("cam1c");
+    NF_UnloadTiledBg("cam1c_1");
+    NF_UnloadTiledBg("cam1c_2");
+    NF_UnloadTiledBg("cam1c_3");
+
+    NF_UnloadTiledBg("cam2a");
+    NF_UnloadTiledBg("cam2a_b");
+    
+    NF_UnloadTiledBg("cam2b");
+    NF_UnloadTiledBg("cam2b_b");
+    NF_UnloadTiledBg("cam2b_g");
+
+    NF_UnloadTiledBg("cam3");
+    NF_UnloadTiledBg("cam3_b");
+
+    NF_UnloadTiledBg("cam4a");
+    NF_UnloadTiledBg("cam4a_c");
+    NF_UnloadTiledBg("cam4a_f");
+    
+    NF_UnloadTiledBg("cam4b");
+    NF_UnloadTiledBg("cam4b_c");
+    NF_UnloadTiledBg("cam4b_f");
+    
+    NF_UnloadTiledBg("cam5");
+    NF_UnloadTiledBg("cam5_b");
+    
+    NF_UnloadTiledBg("cam6");
+    
+    NF_UnloadTiledBg("cam7");
+    NF_UnloadTiledBg("cam7_c");
+    NF_UnloadTiledBg("cam7_f");
+
+    NF_UnloadTiledBg("minimap");
+
+    NF_ResetTiledBgBuffers();
+    
+    NF_UnloadSpriteGfx(0);
+    NF_UnloadSpritePal(0);
+    NF_FreeSpriteGfx(0, 0);
+    NF_DeleteSprite(0, 0);
+    
+    NF_ResetSpriteBuffers();
+    
+    //NF_UnloadTextFont("top");
+    //NF_UnloadTextFont("bottom");
+    
+    NF_DeleteTextLayer(0, 0);
+    NF_DeleteTextLayer(1, 0);
+
+    gameOver();
+
     return 0;
 }
 

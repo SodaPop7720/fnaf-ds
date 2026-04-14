@@ -2,7 +2,7 @@
 #include <stdlib.h> 
 #include <time.h>
 
-#include "init.h"
+#include "a.h"
 
 #include <nds.h>
 #include <filesystem.h>

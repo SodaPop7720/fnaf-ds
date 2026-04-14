@@ -8,6 +8,7 @@
 
 #include <nf_lib.h>
 
+#include "a.h"
 #include "mainmenu.h"
 #include "newspaper.h"
 
@@ -78,7 +79,6 @@ int menuCreate()
 
 // variables
 touchPosition touch_pos = { 0 };
-int staticTimer = 0;
 int daMenuSelection = 1;
 int brightness = 0;
 bool doBrightnessThingy = false;

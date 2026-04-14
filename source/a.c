@@ -7,8 +7,10 @@
 
 #include <nf_lib.h>
 
-#include "init.h"
+#include "a.h"
 #include "mainmenu.h"
+
+int staticTimer = 0;
 
 int initEverything()
 {
