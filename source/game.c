@@ -178,14 +178,14 @@ int checkAnimatronics()
     {
         switch(foxyPhase)
         {
-            case 0: camName = "cam1c";
-            case 1: camName = "cam1c_1";
-            case 2: camName = "cam1c_2";
-            default: camName = "cam1c_3";
+            case 0: camName = "cam1c"; break;
+            case 1: camName = "cam1c_1"; break;
+            case 2: camName = "cam1c_2"; break;
+            default: camName = "cam1c_3"; break;
         }
     }
     
-    if (camName == "cam2a" && foxyPhase >= 3)
+    if (foxyPhase > 2 && camName == "cam2a" && usingCams)
     {
         camName = "cam6";
         foxyRunning = true;
@@ -421,6 +421,7 @@ int onUpdate()
                 }
 
                 checkAnimatronics();
+
                 NF_CreateTiledBg(0, 3, camName);
             }
         }
