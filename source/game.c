@@ -10,12 +10,14 @@
 #include <nf_lib.h>
 
 #include "daTime.h"
+#include "bonnieAI.h"
 #include "foxyAI.h"
 #include "game.h"
 #include "gameover.h"
 
 // Not my best code ever I know the codes a little bad yeah
 
+int bonnieAILevel = 20;
 int foxyAILevel = 20;
 
 int onCreate()
@@ -91,6 +93,8 @@ int onCreate()
     NF_LoadTiledBg("bg/cams/7", "cam7", 512, 512);
     NF_LoadTiledBg("bg/cams/7_c", "cam7_c", 512, 512);
     NF_LoadTiledBg("bg/cams/7_f", "cam7_f", 512, 512);
+    
+    NF_LoadTiledBg("bg/cams/6", "camNothing", 512, 512);
 
     NF_LoadTiledBg("bg/minimap", "minimap", 256, 256);
     NF_CreateTiledBg(1, 3, "minimap");
@@ -169,12 +173,31 @@ int foxyAttack()
     {
         gotJumped = true;
     }
+    
+    return 0;
 }
 
-// fixes an issue where the image doesnt update when someone moves
 int checkAnimatronics()
 {
-    if (camName == "cam1c" || camName == "cam1c_1" || camName == "cam1c_2" || camName == "cam1c_3")
+    if (camName == "cam1a")
+    {
+        if (bonnieLocation == 0) 
+        {
+            camName = "cam1a_fbc";
+        } 
+        else 
+        {
+            camName = "cam1a_fc";
+        }
+    }
+    if (camName == "cam1b")
+    {
+        if (bonnieLocation == 1) 
+        {
+            camName = "cam1b_b";
+        }
+    }
+    if (camName == "cam1c")
     {
         switch(foxyPhase)
         {
@@ -184,13 +207,51 @@ int checkAnimatronics()
             default: camName = "cam1c_3"; break;
         }
     }
+    if (camName == "cam2a")
+    {
+        if (bonnieLocation == 3) 
+        {
+            camName = "cam2a_b";
+        }
+    }
+    if (camName == "cam2b")
+    {
+        if (bonnieLocation == 5) 
+        {
+            camName = "cam2b_b";
+        }
+    }
+    if (camName == "cam3")
+    {
+        if (bonnieLocation == 4) 
+        {
+            camName = "cam3_b";
+        }
+    }
+    if (camName == "cam5")
+    {
+        if (bonnieLocation == 2)
+        {
+            camName = "cam5_b";
+        }  
+    }
     
     if (foxyPhase > 2 && camName == "cam2a" && usingCams)
     {
-        camName = "cam6";
+        camName = "camNothing";
         foxyRunning = true;
         NF_PlayRawSound(6, 100, 64, false, 0);
     }
+
+    return 0;
+}
+
+int updateCams()
+{
+    checkAnimatronics();
+    NF_CreateTiledBg(0, 3, camName);
+
+    return 0;
 }
 
 int onUpdate()
@@ -343,7 +404,7 @@ int onUpdate()
                 NF_ShowBg(0, 2);
                 NF_ShowBg(1, 3);
 
-                NF_CreateTiledBg(0, 3, camName);
+                updateCams();
             }
             else
             {
@@ -420,9 +481,7 @@ int onUpdate()
                     camName = "cam7";
                 }
 
-                checkAnimatronics();
-
-                NF_CreateTiledBg(0, 3, camName);
+                updateCams();
             }
         }
 
@@ -436,6 +495,7 @@ int onUpdate()
             NF_ScrollBg(0, 3, (camX * 2), 160);
         }
         
+        bonnieTime();
         foxyTime();
 
         if (gotJumped)
@@ -444,6 +504,9 @@ int onUpdate()
         daTimeShit();
         if (timeAM > 5)
             break;
+
+        if (bonnieAILevel > 20) bonnieAILevel = 20;
+        if (foxyAILevel > 20) foxyAILevel = 20;
 
         NF_SpriteRotScale(0, 0, 0, 96, 96);
         NF_SpriteFrame(0, 0, timeAM);
@@ -472,7 +535,7 @@ int onUpdate()
             power = 0;
         
         char mytext[128];
-        snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d     ", ceil(power - 1), usage);
+        snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d          ", ceil(power - 1), usage);
         NF_WriteText(0, 0, 1, 1, mytext);
 
         if (!usingCams) // yes the spaces are required because the ds is weird
@@ -571,7 +634,7 @@ int onUpdate()
     NF_DeleteTextLayer(0, 0);
     NF_DeleteTextLayer(1, 0);
 
-    gameOver();
+    if (gotJumped) gameOver();
 
     return 0;
 }

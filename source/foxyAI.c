@@ -42,7 +42,7 @@ int foxyTime()
     {
         if (!usingCams)
         {
-            if (rand() % 20 <= foxyAILevel)
+            if ((rand() % 20) < foxyAILevel)
             {
                 foxyPhase += 1;
             }

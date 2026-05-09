@@ -25,11 +25,22 @@ int daTimeShit()
     if (difftime(now, last) >= 90.0)
     {
         timeAM += 1;
+        
+        if (timeAM == 2)
+        {
+            bonnieAILevel += 1;
+        }
         if (timeAM == 3)
+        {
+            bonnieAILevel += 1;
             foxyAILevel += 1;
-
+        }
         if (timeAM == 4)
+        {
+            bonnieAILevel += 1;
             foxyAILevel += 1;
+        }
+
         last = now;
     }
 

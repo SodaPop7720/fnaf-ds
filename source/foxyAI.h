@@ -6,6 +6,5 @@
 extern int foxyPhase;
 
 int foxyTime();
-int foxyMove();
 
 #endif 
