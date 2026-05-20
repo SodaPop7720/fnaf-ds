@@ -48,7 +48,8 @@ int bonnieTime()
                 case 3: bonnieLocation = (rand() % 2) + 4; break;
                 case 4: if (rand() % 2 == 0) bonnieLocation = (rand() % 2) + 5; else bonnieLocation = 3; break;
                 case 5: if (rand() % 2 == 0) bonnieLocation = 4; else bonnieLocation = 6; break;
-                case 6: bonnieLocation = 7; break;
+                case 6: if (ldoor) bonnieLocation = 1; else bonnieLocation = 7; break;
+                case 7: if (usingCams) gotJumped = true;
             }
 
             if(usingCams)

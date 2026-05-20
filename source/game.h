@@ -9,9 +9,13 @@ extern int foxyAILevel;
 
 extern bool foxyRunning;
 
+extern bool ldoor;
+extern bool rdoor;
+
 extern bool usingCams;
 extern const char* camName;
 
+extern bool gotJumped;
 extern const char* whoGotU;
 
 extern int foxyAttack();

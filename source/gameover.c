@@ -25,8 +25,8 @@ int gameOver()
     NF_UnloadRawSound(0);
     NF_ResetRawSoundBuffers();
     
-    NF_LoadRawSound("sfx/kill", 7, 11025, 0); 
-    NF_PlayRawSound(7, 100, 64, false, 0);
+    NF_LoadRawSound("sfx/kill", 13, 11025, 0); 
+    NF_PlayRawSound(13, 100, 64, false, 0);
 
     while (1)
     {

@@ -130,7 +130,9 @@ int onPostCreate()
     NF_LoadRawSound("sfx/flip", 3, 11025, 0);
     NF_LoadRawSound("sfx/blip", 4, 11025, 0);
     NF_LoadRawSound("sfx/knock", 5, 11025, 0);
-    NF_LoadRawSound("sfx/run", 6, 11025, 0); 
+    NF_LoadRawSound("sfx/run", 6, 11025, 0);
+    NF_LoadRawSound("sfx/window", 7, 22050, 0);
+    NF_LoadRawSound("sfx/error", 8, 11025, 0);
 
     return 0;
 }
@@ -336,11 +338,18 @@ int onUpdate()
 
             if (keys_down & KEY_A)
             {
-                NF_PlayRawSound(2, 127, 64, false, 0);
+                if (bonnieLocation <= 6) NF_PlayRawSound(2, 127, 64, false, 0);
 
                 if (lookingLeft)
                 {
-                    ldoor = !ldoor;
+                    if (bonnieLocation > 6)
+                    {
+                        NF_PlayRawSound(8, 100, 64, false, 0);
+                    }
+                    else
+                    {
+                        ldoor = !ldoor;
+                    }
                 }
                 else
                 {
@@ -365,7 +374,15 @@ int onUpdate()
                 const char* bgname;
                 if (ldoorlight)
                 {
-                    bgname = "office_left";
+                    if (bonnieLocation > 5)
+                    {
+                        bgname = "office_bonnie";
+                        NF_PlayRawSound(7, 100, 64, false, 0);
+                    }
+                    else
+                    {
+                        bgname = "office_left";
+                    }
                 }
                 else if (rdoorlight)
                 {
@@ -434,6 +451,8 @@ int onUpdate()
                 NF_HideBg(1, 3);
 
                 NF_CreateTiledBg(0, 3, "office_off");
+
+                if (bonnieLocation > 6) gotJumped = true;
             }
         }
         
