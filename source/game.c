@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <stdbool.h>
+#include <string.h>
 #include <time.h>
 #include <math.h>
 
@@ -179,7 +180,7 @@ int foxyAttack()
 
 int checkAnimatronics()
 {
-    if (camName == "cam1a")
+    if (strstr(camName, "cam1a") != NULL)
     {
         if (bonnieLocation == 0) 
         {
@@ -190,14 +191,18 @@ int checkAnimatronics()
             camName = "cam1a_fc";
         }
     }
-    if (camName == "cam1b")
+    if (strstr(camName, "cam1b") != NULL)
     {
         if (bonnieLocation == 1) 
         {
             camName = "cam1b_b";
         }
+        else 
+        {
+            camName = "cam1b";
+        }
     }
-    if (camName == "cam1c")
+    if (strstr(camName, "cam1c") != NULL)
     {
         switch(foxyPhase)
         {
@@ -207,36 +212,52 @@ int checkAnimatronics()
             default: camName = "cam1c_3"; break;
         }
     }
-    if (camName == "cam2a")
+    if (strstr(camName, "cam2a") != NULL)
     {
         if (bonnieLocation == 3) 
         {
             camName = "cam2a_b";
         }
+        else 
+        {
+            camName = "cam2a";
+        }
     }
-    if (camName == "cam2b")
+    if (strstr(camName, "cam2b") != NULL)
     {
         if (bonnieLocation == 5) 
         {
             camName = "cam2b_b";
         }
+        else 
+        {
+            camName = "cam2b";
+        }
     }
-    if (camName == "cam3")
+    if (strstr(camName, "cam3") != NULL)
     {
         if (bonnieLocation == 4) 
         {
             camName = "cam3_b";
         }
+        else 
+        {
+            camName = "cam3";
+        }
     }
-    if (camName == "cam5")
+    if (strstr(camName, "cam5") != NULL)
     {
         if (bonnieLocation == 2)
         {
             camName = "cam5_b";
-        }  
+        }
+        else 
+        {
+            camName = "cam5";
+        }
     }
     
-    if (foxyPhase > 2 && camName == "cam2a" && usingCams)
+    if (foxyPhase > 2 && strstr(camName, "cam2a") != NULL && usingCams)
     {
         camName = "camNothing";
         foxyRunning = true;
