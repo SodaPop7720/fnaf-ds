@@ -5,6 +5,7 @@
 #include <nds.h>
 
 extern int bonnieAILevel;
+extern int chicaAILevel;
 extern int foxyAILevel;
 
 extern bool foxyRunning;

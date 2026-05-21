@@ -12,6 +12,7 @@
 
 #include "daTime.h"
 #include "bonnieAI.h"
+#include "chicaAI.h"
 #include "foxyAI.h"
 #include "game.h"
 #include "gameover.h"
@@ -19,6 +20,7 @@
 // Not my best code ever I know the codes a little bad yeah
 
 int bonnieAILevel = 20;
+int chicaAILevel = 20;
 int foxyAILevel = 20;
 
 int onCreate()
@@ -180,17 +182,25 @@ int foxyAttack()
     return 0;
 }
 
-int checkAnimatronics()
+int checkAnimatronics() // I know theres prolly a better way to do this but idgaf
 {
     if (strstr(camName, "cam1a") != NULL)
     {
-        if (bonnieLocation == 0) 
+        if (bonnieLocation == 0 && chicaLocation == 0) 
         {
             camName = "cam1a_fbc";
         } 
-        else 
+        else if (chicaLocation == 0) 
         {
             camName = "cam1a_fc";
+        }
+        else if (bonnieLocation == 0) 
+        {
+            camName = "cam1a_fb";
+        }
+        else
+        {
+            camName = "cam1a_f";
         }
     }
     if (strstr(camName, "cam1b") != NULL)
@@ -198,6 +208,10 @@ int checkAnimatronics()
         if (bonnieLocation == 1) 
         {
             camName = "cam1b_b";
+        }
+        else if (chicaLocation == 1) 
+        {
+            camName = "cam1b_c";
         }
         else 
         {
@@ -247,6 +261,28 @@ int checkAnimatronics()
             camName = "cam3";
         }
     }
+    if (strstr(camName, "cam4a") != NULL)
+    {
+        if (chicaLocation == 4) 
+        {
+            camName = "cam4a_c";
+        }
+        else 
+        {
+            camName = "cam4a";
+        }
+    }
+    if (strstr(camName, "cam4b") != NULL)
+    {
+        if (chicaLocation == 5) 
+        {
+            camName = "cam4b_c";
+        }
+        else 
+        {
+            camName = "cam4b";
+        }
+    }
     if (strstr(camName, "cam5") != NULL)
     {
         if (bonnieLocation == 2)
@@ -256,6 +292,17 @@ int checkAnimatronics()
         else 
         {
             camName = "cam5";
+        }
+    }
+    if (strstr(camName, "cam7") != NULL)
+    {
+        if (chicaLocation == 2) 
+        {
+            camName = "cam7_c";
+        }
+        else 
+        {
+            camName = "cam7";
         }
     }
     
@@ -338,7 +385,7 @@ int onUpdate()
 
             if (keys_down & KEY_A)
             {
-                if (bonnieLocation <= 6) NF_PlayRawSound(2, 127, 64, false, 0);
+                if (bonnieLocation <= 6 && chicaLocation <= 6) NF_PlayRawSound(2, 127, 64, false, 0);
 
                 if (lookingLeft)
                 {
@@ -353,7 +400,14 @@ int onUpdate()
                 }
                 else
                 {
-                    rdoor = !rdoor;
+                    if (chicaLocation > 6)
+                    {
+                        NF_PlayRawSound(8, 100, 64, false, 0);
+                    }
+                    else
+                    {
+                        rdoor = !rdoor;
+                    }
                 }
             }
 
@@ -386,7 +440,15 @@ int onUpdate()
                 }
                 else if (rdoorlight)
                 {
-                    bgname = "office_right";
+                    if (chicaLocation > 5)
+                    {
+                        bgname = "office_chica";
+                        NF_PlayRawSound(7, 100, 64, false, 0);
+                    }
+                    else
+                    {
+                        bgname = "office_right";
+                    }
                 }
                 else
                 {
@@ -452,7 +514,7 @@ int onUpdate()
 
                 NF_CreateTiledBg(0, 3, "office_off");
 
-                if (bonnieLocation > 6) gotJumped = true;
+                if (bonnieLocation > 6 || chicaLocation > 6) gotJumped = true;
             }
         }
         
@@ -536,6 +598,7 @@ int onUpdate()
         }
         
         bonnieTime();
+        chicaTime();
         foxyTime();
 
         if (gotJumped)
@@ -546,6 +609,7 @@ int onUpdate()
             break;
 
         if (bonnieAILevel > 20) bonnieAILevel = 20;
+        if (chicaAILevel > 20) chicaAILevel = 20;
         if (foxyAILevel > 20) foxyAILevel = 20;
 
         NF_SpriteRotScale(0, 0, 0, 96, 96);
