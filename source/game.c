@@ -11,6 +11,7 @@
 #include <nf_lib.h>
 
 #include "daTime.h"
+#include "freddyAI.h"
 #include "bonnieAI.h"
 #include "chicaAI.h"
 #include "foxyAI.h"
@@ -19,6 +20,7 @@
 
 // Not my best code ever I know the codes a little bad yeah
 
+int freddyAILevel = 20;
 int bonnieAILevel = 20;
 int chicaAILevel = 20;
 int foxyAILevel = 20;
@@ -198,9 +200,13 @@ int checkAnimatronics() // I know theres prolly a better way to do this but idga
         {
             camName = "cam1a_fb";
         }
-        else
+        else if (freddyLocation == 0)
         {
             camName = "cam1a_f";
+        }
+        else
+        {
+            camName = "cam1a";
         }
     }
     if (strstr(camName, "cam1b") != NULL)
@@ -212,6 +218,10 @@ int checkAnimatronics() // I know theres prolly a better way to do this but idga
         else if (chicaLocation == 1) 
         {
             camName = "cam1b_c";
+        }
+        else if (freddyLocation == 1) 
+        {
+            camName = "cam1b_f";
         }
         else 
         {
@@ -267,6 +277,10 @@ int checkAnimatronics() // I know theres prolly a better way to do this but idga
         {
             camName = "cam4a_c";
         }
+        else if (freddyLocation == 4) 
+        {
+            camName = "cam4a_f";
+        }
         else 
         {
             camName = "cam4a";
@@ -278,7 +292,11 @@ int checkAnimatronics() // I know theres prolly a better way to do this but idga
         {
             camName = "cam4b_c";
         }
-        else 
+        else if (freddyLocation == 5)
+        {
+            camName = "cam4b_f";
+        }
+        else
         {
             camName = "cam4b";
         }
@@ -299,6 +317,10 @@ int checkAnimatronics() // I know theres prolly a better way to do this but idga
         if (chicaLocation == 2) 
         {
             camName = "cam7_c";
+        }
+        else if (freddyLocation == 2) 
+        {
+            camName = "cam7_f";
         }
         else 
         {
@@ -597,6 +619,7 @@ int onUpdate()
             NF_ScrollBg(0, 3, (camX * 2), 160);
         }
         
+        freddyTime();
         bonnieTime();
         chicaTime();
         foxyTime();
@@ -608,6 +631,7 @@ int onUpdate()
         if (timeAM > 5)
             break;
 
+        if (freddyAILevel > 20) freddyAILevel = 20;
         if (bonnieAILevel > 20) bonnieAILevel = 20;
         if (chicaAILevel > 20) chicaAILevel = 20;
         if (foxyAILevel > 20) foxyAILevel = 20;

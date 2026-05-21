@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <nds.h>
 
+extern int freddyAILevel;
 extern int bonnieAILevel;
 extern int chicaAILevel;
 extern int foxyAILevel;
