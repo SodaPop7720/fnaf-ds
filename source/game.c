@@ -659,8 +659,8 @@ int onUpdate()
         }
 
         power -= 0.0015 * usage;
-        if (power < 0)
-            power = 0;
+        if (power < 1)
+            power = 1;
         
         char mytext[128];
         snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d          ", ceil(power - 1), usage);
