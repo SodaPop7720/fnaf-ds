@@ -169,6 +169,8 @@ int menuUpdate()
 
         if (brightness < -16)
         {
+            brightness = 0;
+            
             doBrightnessThingy = false;
             break;
         }

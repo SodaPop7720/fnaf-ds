@@ -20,7 +20,7 @@
 #include "game.h"
 
 int freddyLocation = 0;
-int freddyCountdown = 500;
+int freddyCountdown = 1000;
 
 /* 
 0 = stage
@@ -73,7 +73,7 @@ int freddyTime()
 
 int freddyMove()
 {
-    freddyCountdown -= 50 * freddyAILevel;
+    freddyCountdown -= 100 * freddyAILevel;
     while (1)
     {
         freddyCountdown -= 1;
@@ -84,7 +84,7 @@ int freddyMove()
             if(usingCams)
                 updateCams();
             
-            freddyCountdown = 500;
+            freddyCountdown = 1000;
             break;
         }
     }

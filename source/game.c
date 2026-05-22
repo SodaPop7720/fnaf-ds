@@ -762,7 +762,35 @@ int onUpdate()
     NF_DeleteTextLayer(0, 0);
     NF_DeleteTextLayer(1, 0);
 
+    soundKill(0);
+    NF_ResetRawSoundBuffers();
+
     if (gotJumped) gameOver();
+
+    // resetting all vars
+    officeX = 50;
+    camX = 25;
+    scrollSpeed = 3;
+    power = 100;
+    usage = 1;
+    foxyRunning = false;
+    usingCams = false;
+    camName = "cam1a_fbc";
+    camGoLeft = false;
+    lookingLeft = true;
+    ldoor = false;
+    ldoorlight = false;
+    rdoor = false;
+    rdoorlight = false;
+    prev_ldoor = false;
+    prev_ldoorlight = false;
+    prev_rdoor = false;
+    prev_rdoorlight = false;
+    gotJumped = false;
+    freddyLocation = 0;
+    bonnieLocation = 0;
+    chicaLocation = 0;
+    foxyPhase = 0;
 
     return 0;
 }

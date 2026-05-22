@@ -5,5 +5,6 @@
 #include <nds.h>
 
 int gameOver();
+int gameOverImage();
 
 #endif
