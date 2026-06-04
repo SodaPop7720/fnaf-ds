@@ -14,6 +14,8 @@
 
 int gameOver() 
 {
+    gotJumped = false;
+
     NF_LoadTiledBg("bg/static0", "static0", 256, 256);
     NF_LoadTiledBg("bg/static1", "static1", 256, 256);
     NF_LoadTiledBg("bg/static2", "static2", 256, 256);
@@ -26,6 +28,7 @@ int gameOver()
     NF_PlayRawSound(0, 100, 64, false, 0);
 
     int brightness = 0;
+    staticTimer = 0;
 
     while (staticTimer < 300)
     {

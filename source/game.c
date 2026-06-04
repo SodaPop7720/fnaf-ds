@@ -764,9 +764,7 @@ int onUpdate()
 
     soundKill(0);
     NF_ResetRawSoundBuffers();
-
-    if (gotJumped) gameOver();
-
+    
     // resetting all vars
     officeX = 50;
     camX = 25;
@@ -786,11 +784,12 @@ int onUpdate()
     prev_ldoorlight = false;
     prev_rdoor = false;
     prev_rdoorlight = false;
-    gotJumped = false;
     freddyLocation = 0;
     bonnieLocation = 0;
     chicaLocation = 0;
     foxyPhase = 0;
+
+    if (gotJumped) gameOver();
 
     return 0;
 }
