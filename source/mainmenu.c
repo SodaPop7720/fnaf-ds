@@ -98,30 +98,20 @@ int menuUpdate()
             switch (touch_pos.py / 32)
             {
                 case 1:
-                    NF_MoveSprite(1, 4, 56, 32);
-                    if (daMenuSelection != 1)
-                        NF_PlayRawSound(2, 127, 64, false, 0);
-                    daMenuSelection = 1;
+                    if (daMenuSelection != 1) NF_PlayRawSound(2, 127, 64, false, 0);
                     break;
                 case 2:
-                    NF_MoveSprite(1, 4, 56, 64);
-                    if (daMenuSelection != 2)
-                        NF_PlayRawSound(2, 127, 64, false, 0);
-                    daMenuSelection = 2;
+                    if (daMenuSelection != 2) NF_PlayRawSound(2, 127, 64, false, 0);
                     break;
                 case 3:
-                    NF_MoveSprite(1, 4, 56, 96);
-                    if (daMenuSelection != 3)
-                        NF_PlayRawSound(2, 127, 64, false, 0);
-                    daMenuSelection = 3;
+                    if (daMenuSelection != 3) NF_PlayRawSound(2, 127, 64, false, 0);
                     break;
                 case 4:
-                    NF_MoveSprite(1, 4, 56, 128);
-                    if (daMenuSelection != 4)
-                        NF_PlayRawSound(2, 127, 64, false, 0);
-                    daMenuSelection = 4;
+                    if (daMenuSelection != 4) NF_PlayRawSound(2, 127, 64, false, 0);
                     break;
             }
+            
+            daMenuSelection = touch_pos.py / 32;
         }
 
         NF_SpriteRotScale(1, 4, 0, 128, 128);
@@ -137,15 +127,33 @@ int menuUpdate()
 
         if (keys_down & KEY_UP)
         {
+            NF_PlayRawSound(2, 127, 64, false, 0);
             daMenuSelection -= 1;
             if (daMenuSelection < 1)
                 daMenuSelection = 4;
         }
         if (keys_down & KEY_DOWN)
         {
+            NF_PlayRawSound(2, 127, 64, false, 0);
             daMenuSelection += 1;
             if (daMenuSelection > 4)
                 daMenuSelection = 1;
+        }
+
+        switch (daMenuSelection)
+        {
+            case 1:
+                NF_MoveSprite(1, 4, 56, 32);
+                break;
+            case 2:
+                NF_MoveSprite(1, 4, 56, 64);
+                break;
+            case 3:
+                NF_MoveSprite(1, 4, 56, 96);
+                break;
+            case 4:
+                NF_MoveSprite(1, 4, 56, 128);
+                break;
         }
         
         if (doBrightnessThingy)
