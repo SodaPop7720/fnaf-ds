@@ -40,6 +40,14 @@ int onCreate()
     NF_InitTextSys(0);
     NF_InitTextSys(1);
 
+    NF_LoadSpriteGfx("sprite/loading", 1, 64, 64);
+    NF_LoadSpritePal("sprite/loading", 1);
+
+    NF_VramSpriteGfx(0, 1, 1, false);
+    NF_VramSpritePal(0, 1, 1);
+    
+    NF_CreateSprite(0, 1, 1, 1, 192, 128);
+
     NF_LoadTiledBg("bg/office", "office_off", 512, 512);
     NF_LoadTiledBg("bg/officeLeftLight", "office_left", 512, 512);
     NF_LoadTiledBg("bg/officeRightLight", "office_right", 512, 512);
@@ -47,14 +55,11 @@ int onCreate()
     NF_LoadTiledBg("bg/officeChica", "office_chica", 512, 512);
     NF_LoadTiledBg("bg/officePowerOut", "office_power", 512, 512);
     NF_LoadTiledBg("bg/officePowerOutFreddy", "office_powerfred", 512, 512);
-    NF_CreateTiledBg(0, 3, "office_off");
-    NF_ScrollBg(0, 3, 100, 160);
 
     NF_LoadTiledBg("bg/nothing", "doors_off", 512, 512);
     NF_LoadTiledBg("bg/LDoor", "doors_L", 512, 512);
     NF_LoadTiledBg("bg/RDoor", "doors_R", 512, 512);
     NF_LoadTiledBg("bg/LRDoor", "doors_LR", 512, 512);
-    NF_CreateTiledBg(0, 1, "doors_off");
     
     NF_LoadTiledBg("bg/cams/1a", "cam1a", 512, 512);
     NF_LoadTiledBg("bg/cams/1a_fbc", "cam1a_fbc", 512, 512);
@@ -102,22 +107,25 @@ int onCreate()
     NF_LoadTiledBg("bg/cams/6", "camNothing", 512, 512);
 
     NF_LoadTiledBg("bg/minimap", "minimap", 256, 256);
-    NF_CreateTiledBg(1, 3, "minimap");
-    NF_HideBg(1, 3);
     
     NF_LoadSpriteGfx("sprite/timeAMspr", 0, 64, 32);
     NF_LoadSpritePal("sprite/timeAMspr", 0);
 
     NF_VramSpriteGfx(0, 0, 0, true);
     NF_VramSpritePal(0, 0, 0);
-
-    NF_CreateSprite(0, 0, 0, 0, 192, 0);
-    NF_SpriteFrame(0, 0, 0);
-    
-    NF_EnableSpriteRotScale(0, 0, 0, false);
     
     NF_LoadTextFont("fnt/default", "top", 256, 256, 0);
     NF_LoadTextFont("fnt/default", "bottom", 256, 256, 0);
+    
+    NF_CreateTiledBg(0, 3, "office_off");
+    NF_ScrollBg(0, 3, 100, 160);
+    NF_CreateTiledBg(0, 1, "doors_off");
+    NF_CreateTiledBg(1, 3, "minimap");
+    NF_HideBg(1, 3);
+
+    NF_CreateSprite(0, 0, 0, 0, 192, 0);
+    NF_SpriteFrame(0, 0, 0);
+    NF_EnableSpriteRotScale(0, 0, 0, false);
     
     NF_CreateTextLayer(0, 0, 0, "top");
     NF_CreateTextLayer(1, 0, 0, "bottom");
@@ -127,6 +135,11 @@ int onCreate()
 
 int onPostCreate()
 {
+    NF_UnloadSpriteGfx(1);
+    NF_UnloadSpritePal(1);
+    NF_FreeSpriteGfx(0, 1);
+    NF_DeleteSprite(0, 1);
+
     NF_LoadRawSound("sfx/fan", 0, 11025, 0);
     NF_PlayRawSound(0, 100, 64, true, 0);
     

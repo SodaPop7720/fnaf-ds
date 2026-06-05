@@ -112,6 +112,8 @@ int menuUpdate()
             }
             
             daMenuSelection = touch_pos.py / 32;
+            if (daMenuSelection < 1) daMenuSelection = 1;
+            if (daMenuSelection > 4) daMenuSelection = 4;
         }
 
         NF_SpriteRotScale(1, 4, 0, 128, 128);
@@ -129,15 +131,13 @@ int menuUpdate()
         {
             NF_PlayRawSound(2, 127, 64, false, 0);
             daMenuSelection -= 1;
-            if (daMenuSelection < 1)
-                daMenuSelection = 4;
+            if (daMenuSelection < 1) daMenuSelection = 4;
         }
         if (keys_down & KEY_DOWN)
         {
             NF_PlayRawSound(2, 127, 64, false, 0);
             daMenuSelection += 1;
-            if (daMenuSelection > 4)
-                daMenuSelection = 1;
+            if (daMenuSelection > 4) daMenuSelection = 1;
         }
 
         switch (daMenuSelection)
@@ -229,7 +229,10 @@ int menuUpdate()
 
     NF_ResetSpriteBuffers();
 
-    newspaperStuff();
+    switch(daMenuSelection)
+    {
+        case 1: newspaperStuff(); break;
+    }
 
     return 0;
 }
