@@ -40,6 +40,7 @@ int chicaTime()
     {
         if (rand() % 20 < chicaAILevel)
         {
+            NF_PlayRawSound(10, 50, 64, false, 0);
             switch(chicaLocation)
             {
                 case 0: chicaLocation = 1; break;

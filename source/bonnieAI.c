@@ -40,6 +40,7 @@ int bonnieTime()
     {
         if (rand() % 20 < bonnieAILevel)
         {
+            NF_PlayRawSound(10, 50, 64, false, 0);
             switch(bonnieLocation)
             {
                 case 0: bonnieLocation = (rand() % 2) + 1; break;

@@ -159,6 +159,7 @@ int onPostCreate()
     NF_LoadRawSound("sfx/window", 7, 22050, 0);
     NF_LoadRawSound("sfx/error", 8, 11025, 0);
     NF_LoadRawSound("sfx/freddy", 9, 11025, 0);
+    NF_LoadRawSound("sfx/walk", 10, 11025, 0);
 
     return 0;
 }
