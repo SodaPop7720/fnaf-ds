@@ -17,6 +17,7 @@
 #include "foxyAI.h"
 #include "game.h"
 #include "gameover.h"
+#include "win.h"
 
 // Not my best code ever I know the codes a little bad yeah
 
@@ -703,6 +704,8 @@ int onUpdate()
         NF_SpriteOamSet(1);
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
+
+        break; //used to test 6am screen
     }
     
     NF_DeleteTiledBg(0, 1);
@@ -809,7 +812,7 @@ int onUpdate()
     chicaLocation = 0;
     foxyPhase = 0;
 
-    if (gotJumped) gameOver();
+    if (gotJumped) gameOver(); else sixAMScreen();
 
     return 0;
 }
