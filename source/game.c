@@ -705,7 +705,7 @@ int onUpdate()
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
 
-        break; //used to test 6am screen
+        //break; //used to test 6am screen
     }
     
     NF_DeleteTiledBg(0, 1);
