@@ -79,6 +79,7 @@ int freddyMove()
         freddyCountdown -= 1;
         if (freddyCountdown <= 0 && !usingCams)
         {
+            NF_PlayRawSound(9, 100, 64, false, 0);
             freddyLocation += 1;
 
             if(usingCams)

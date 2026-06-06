@@ -18,6 +18,7 @@ int menuCreate()
 {
     // load the shit
     
+    createSave();
     loadGame();
 
     NF_LoadTiledBg("bg/titleFred0", "titleFred", 256, 256);

@@ -3,3 +3,4 @@ extern SaveData daSaveData;
 
 void saveGame();
 void loadGame();
+void createSave();

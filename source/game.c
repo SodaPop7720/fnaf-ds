@@ -158,6 +158,7 @@ int onPostCreate()
     NF_LoadRawSound("sfx/run", 6, 11025, 0);
     NF_LoadRawSound("sfx/window", 7, 22050, 0);
     NF_LoadRawSound("sfx/error", 8, 11025, 0);
+    NF_LoadRawSound("sfx/freddy", 9, 11025, 0);
 
     return 0;
 }
@@ -705,7 +706,7 @@ int onUpdate()
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
 
-        //break; //used to test 6am screen
+        //break; //used to test shit
     }
     
     NF_DeleteTiledBg(0, 1);

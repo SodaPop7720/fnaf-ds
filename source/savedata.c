@@ -22,3 +22,17 @@ void loadGame()
         fclose(file);
     }
 }
+
+void createSave()
+{
+    FILE *file = fopen("fat:/saves/fnaf_ds.sav", "rb");
+    if (file != NULL) 
+    {
+        fclose(file);
+    }
+    else
+    {
+        daSaveData.curNight = 1;
+        saveGame();
+    }
+}
