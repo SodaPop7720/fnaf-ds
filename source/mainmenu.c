@@ -5,17 +5,21 @@
 
 #include <nds.h>
 #include <filesystem.h>
+#include <fat.h>
 
 #include <nf_lib.h>
 
 #include "a.h"
 #include "mainmenu.h"
 #include "newspaper.h"
+#include "savedata.h"
 
 int menuCreate()
 {
     // load the shit
     
+    loadGame();
+
     NF_LoadTiledBg("bg/titleFred0", "titleFred", 256, 256);
     NF_LoadTiledBg("bg/logo", "logo", 256, 256);
     NF_LoadTiledBg("bg/static0", "static0", 256, 256);
