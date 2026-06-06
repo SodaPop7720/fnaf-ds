@@ -47,6 +47,13 @@ int onCreate()
     NF_VramSpritePal(0, 1, 1);
     
     NF_CreateSprite(0, 1, 1, 1, 192, 128);
+    
+    swiWaitForVBlank();
+    
+    NF_SpriteOamSet(0);
+    NF_SpriteOamSet(1);
+    oamUpdate(&oamMain);
+    oamUpdate(&oamSub);
 
     NF_LoadTiledBg("bg/office", "office_off", 512, 512);
     NF_LoadTiledBg("bg/officeLeftLight", "office_left", 512, 512);
