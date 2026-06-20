@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+#include <nds.h>
+#include <filesystem.h>
+#include <fat.h>
+#include <unistd.h>
+
 typedef struct SaveData {int curNight;} SaveData;
 SaveData daSaveData;
 

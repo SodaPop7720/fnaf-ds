@@ -5,6 +5,7 @@
 #include <nds.h>
 #include <filesystem.h>
 #include <fat.h>
+#include <unistd.h>
 
 #include <nf_lib.h>
 
@@ -24,7 +25,7 @@ int initEverything()
     swiWaitForVBlank();
 
     nitroFSInit(NULL);
-    NF_SetRootFolder("NITROFS");
+    //NF_SetRootFolder("NITROFS");
 
     fatInitDefault();
 
