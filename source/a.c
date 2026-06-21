@@ -11,6 +11,7 @@
 
 #include "a.h"
 #include "mainmenu.h"
+#include "savedata.h"
 
 int staticTimer = 0;
 
@@ -52,6 +53,9 @@ int initEverything()
     soundEnable();
 
     srand(time(NULL));
+    
+    createSave();
+    loadGame();
 
     // warning since it wont lemme make it its own thing
 
