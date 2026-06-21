@@ -10,7 +10,12 @@ SaveData daSaveData;
 
 void saveGame() 
 {
-    FILE *file = fopen("fat:/saves/fnaf_ds.sav", "wb");
+    char *cwd = fatGetDefaultCwd();
+    char savePath[512];
+    snprintf(savePath, sizeof(savePath), "%s/saves/fnaf_ds.sav", cwd);
+    free(cwd);
+
+    FILE *file = fopen(savePath, "wb");
     if (file) 
     {
         fwrite(&daSaveData, sizeof(struct SaveData), 1, file);
@@ -20,7 +25,12 @@ void saveGame()
 
 void loadGame() 
 {
-    FILE *file = fopen("fat:/saves/fnaf_ds.sav", "rb");
+    char *cwd = fatGetDefaultCwd();
+    char savePath[512];
+    snprintf(savePath, sizeof(savePath), "%s/saves/fnaf_ds.sav", cwd);
+    free(cwd);
+
+    FILE *file = fopen(savePath, "rb");
     if (file) 
     {
         fread(&daSaveData, sizeof(struct SaveData), 1, file);
@@ -30,7 +40,12 @@ void loadGame()
 
 void createSave()
 {
-    FILE *file = fopen("fat:/saves/fnaf_ds.sav", "rb");
+    char *cwd = fatGetDefaultCwd();
+    char savePath[512];
+    snprintf(savePath, sizeof(savePath), "%s/saves/fnaf_ds.sav", cwd);
+    free(cwd);
+
+    FILE *file = fopen(savePath, "rb");
     if (file != NULL) 
     {
         fclose(file);
