@@ -5,7 +5,9 @@
 #include <fat.h>
 #include <unistd.h>
 
-typedef struct SaveData {int curNight;} SaveData;
+#include "savedata.h"
+
+//typedef struct SaveData {int curNight;} SaveData;
 SaveData daSaveData;
 
 void saveGame() 

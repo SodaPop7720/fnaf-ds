@@ -12,6 +12,7 @@
 #include "a.h"
 #include "mainmenu.h"
 #include "newspaper.h"
+#include "nightnumber.h"
 #include "savedata.h"
 
 int menuCreate()
@@ -232,7 +233,17 @@ int menuUpdate()
 
     switch(daMenuSelection)
     {
-        case 1: newspaperStuff(); break;
+        case 1: 
+            newspaperStuff(); 
+            break;
+        case 2: 
+            setBrightness(3, brightness);
+            
+            soundDisable();
+            soundEnable(); // stops all sound
+
+            showNightNumber(); 
+            break;
     }
 
     return 0;

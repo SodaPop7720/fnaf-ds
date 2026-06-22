@@ -8,7 +8,7 @@
 #include <nf_lib.h>
 
 #include "newspaper.h"
-#include "game.h"
+#include "nightnumber.h"
 
 int newspaperStuff()
 {
@@ -45,10 +45,8 @@ int newspaperStuff()
     NF_UnloadRawSound(0);
     NF_UnloadRawSound(1);
     NF_ResetRawSoundBuffers();
-    
-    onCreate();
-    onPostCreate();
-    onUpdate();
+
+    showNightNumber();
 
     return 0;
 }
