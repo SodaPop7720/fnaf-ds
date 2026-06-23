@@ -17,14 +17,15 @@
 #include "foxyAI.h"
 #include "game.h"
 #include "gameover.h"
+#include "savedata.h"
 #include "win.h"
 
 // Not my best code ever I know the codes a little bad yeah
 
-int freddyAILevel = 20;
-int bonnieAILevel = 20;
-int chicaAILevel = 20;
-int foxyAILevel = 20;
+int freddyAILevel = 0;
+int bonnieAILevel = 0;
+int chicaAILevel = 0;
+int foxyAILevel = 0;
 
 int onCreate()
 {
@@ -160,6 +161,52 @@ int onPostCreate()
     NF_LoadRawSound("sfx/error", 8, 11025, 0);
     NF_LoadRawSound("sfx/freddy", 9, 11025, 0);
     NF_LoadRawSound("sfx/walk", 10, 11025, 0);
+
+    switch (daSaveData.curNight) // ai levels
+    {
+        case 1:
+            freddyAILevel = 0;
+            bonnieAILevel = 0;
+            chicaAILevel = 0;
+            foxyAILevel = 0;
+            break;
+        case 2:
+            freddyAILevel = 0;
+            bonnieAILevel = 3;
+            chicaAILevel = 1;
+            foxyAILevel = 1;
+            break;
+        case 3:
+            freddyAILevel = 1;
+            bonnieAILevel = 0;
+            chicaAILevel = 5;
+            foxyAILevel = 2;
+            break;
+        case 4:
+            freddyAILevel = 0;
+            bonnieAILevel = 2;
+            chicaAILevel = 4;
+            foxyAILevel = 6;
+            break;
+        case 5:
+            freddyAILevel = 3;
+            bonnieAILevel = 5;
+            chicaAILevel = 7;
+            foxyAILevel = 9;
+            break;
+        case 6:
+            freddyAILevel = 4;
+            bonnieAILevel = 10;
+            chicaAILevel = 12;
+            foxyAILevel = 16;
+            break;
+        case 7:
+            freddyAILevel = 20;
+            bonnieAILevel = 20;
+            chicaAILevel = 20;
+            foxyAILevel = 20;
+            break;
+    }
 
     return 0;
 }

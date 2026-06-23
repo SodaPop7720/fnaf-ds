@@ -234,6 +234,9 @@ int menuUpdate()
     switch(daMenuSelection)
     {
         case 1: 
+            daSaveData.curNight = 1;
+            saveGame();
+
             newspaperStuff(); 
             break;
         case 2: 
@@ -241,6 +244,17 @@ int menuUpdate()
             
             soundDisable();
             soundEnable(); // stops all sound
+
+            showNightNumber(); 
+            break;
+        case 3: 
+            setBrightness(3, brightness);
+            
+            soundDisable();
+            soundEnable();
+
+            daSaveData.curNight = 6;
+            saveGame();
 
             showNightNumber(); 
             break;

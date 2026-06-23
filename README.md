@@ -3,7 +3,5 @@
 made using BlocksDS and NFLib
 
 # todo list
-* Add nights
-* Make ending screens
-* Add night 6
-* Add custom night
+* Add ending screens
+* Add custom night (button just sends you to 4/20 mode)

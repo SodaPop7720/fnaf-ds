@@ -9,8 +9,10 @@
 
 #include "a.h"
 #include "game.h"
-#include "win.h"
 #include "mainmenu.h"
+#include "nightNumber.h"
+#include "savedata.h"
+#include "win.h"
 
 int sixamtimer = 0;
 float sixamtexty = 0.0;
@@ -92,8 +94,21 @@ int sixAMScreen()
     soundKill(0);
     NF_ResetRawSoundBuffers();
 
-    menuCreate();
-    menuUpdate();
+    if (daSaveData.curNight < 7)
+    {
+        daSaveData.curNight += 1;
+        saveGame();
+    }
+
+    if (daSaveData.curNight > 4)
+    {
+        menuCreate();
+        menuUpdate();
+    }
+    else
+    {
+        showNightNumber(); 
+    }
 
     return 0;
 }
