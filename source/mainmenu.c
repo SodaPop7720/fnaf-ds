@@ -258,6 +258,17 @@ int menuUpdate()
 
             showNightNumber(); 
             break;
+        case 4: 
+            setBrightness(3, brightness);
+            
+            soundDisable();
+            soundEnable();
+
+            daSaveData.curNight = 7;
+            saveGame();
+
+            showNightNumber(); 
+            break;
     }
 
     return 0;
