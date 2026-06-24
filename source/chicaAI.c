@@ -50,7 +50,7 @@ int chicaTime()
                 case 4: if (rand() % 2 == 0) chicaLocation = 1; else chicaLocation = 5; break;
                 case 5: if (rand() % 2 == 0) chicaLocation = 4; else chicaLocation = 6; break;
                 case 6: if (rdoor) chicaLocation = 4; else chicaLocation = 7; break;
-                case 7: if (usingCams) gotJumped = true;
+                case 7: if (usingCams) gotJumped = true; whoGotU = "chica"; break;
             }
 
             if(usingCams)

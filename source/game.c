@@ -27,6 +27,8 @@ int bonnieAILevel = 0;
 int chicaAILevel = 0;
 int foxyAILevel = 0;
 
+const char* whoGotU = "freddy";
+
 int onCreate()
 {
     NF_Set2D(0, 0);
@@ -162,6 +164,8 @@ int onPostCreate()
     NF_LoadRawSound("sfx/freddy", 9, 11025, 0);
     NF_LoadRawSound("sfx/walk", 10, 11025, 0);
 
+    whoGotU = "freddy";
+
     switch (daSaveData.curNight) // ai levels
     {
         case 1:
@@ -183,7 +187,7 @@ int onPostCreate()
             foxyAILevel = 2;
             break;
         case 4:
-            freddyAILevel = 0;
+            freddyAILevel = (rand() % 2) + 1;
             bonnieAILevel = 2;
             chicaAILevel = 4;
             foxyAILevel = 6;
@@ -248,7 +252,7 @@ int foxyAttack()
     }
     else
     {
-        gotJumped = true;
+        gotJumped = true; whoGotU = "foxy";
     }
     
     return 0;
