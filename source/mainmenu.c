@@ -237,6 +237,9 @@ int menuUpdate()
         case 2: 
             setBrightness(3, brightness);
             
+            soundKill(0);
+            NF_ResetRawSoundBuffers();
+
             soundDisable();
             soundEnable(); // stops all sound
 
@@ -251,6 +254,9 @@ int menuUpdate()
         case 3: 
             setBrightness(3, brightness);
             
+            soundKill(0);
+            NF_ResetRawSoundBuffers();
+
             soundDisable();
             soundEnable();
 
@@ -261,6 +267,9 @@ int menuUpdate()
             break;
         case 4: 
             setBrightness(3, brightness);
+            
+            soundKill(0);
+            NF_ResetRawSoundBuffers();
             
             soundDisable();
             soundEnable();
