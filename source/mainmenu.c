@@ -118,10 +118,12 @@ int menuUpdate()
         if (keys_down & KEY_START)
         {
             doBrightnessThingy = true;
+            if (daSaveData.curNight < 5 && daMenuSelection > 2) doBrightnessThingy = false;
         }
         if (keys_down & KEY_A)
         {
             doBrightnessThingy = true;
+            if (daSaveData.curNight < 5 && daMenuSelection > 2) doBrightnessThingy = false;
         }
 
         if (keys_down & KEY_UP)
@@ -270,7 +272,7 @@ int menuUpdate()
             
             soundKill(0);
             NF_ResetRawSoundBuffers();
-            
+
             soundDisable();
             soundEnable();
 
