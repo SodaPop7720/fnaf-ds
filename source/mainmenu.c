@@ -240,6 +240,12 @@ int menuUpdate()
             soundDisable();
             soundEnable(); // stops all sound
 
+            if (daSaveData.curNight > 5)
+            {
+                daSaveData.curNight = 5;
+                saveGame();
+            }
+
             showNightNumber(); 
             break;
         case 3: 
