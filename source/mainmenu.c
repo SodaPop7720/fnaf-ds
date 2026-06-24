@@ -24,12 +24,6 @@ int menuCreate()
     NF_LoadTiledBg("bg/static1", "static1", 256, 256);
     NF_LoadTiledBg("bg/static2", "static2", 256, 256);
     NF_LoadTiledBg("bg/static3", "static3", 256, 256);
-
-    NF_CreateTiledBg(0, 3, "titleFred");
-    NF_CreateTiledBg(0, 0, "logo");
-    
-    NF_CreateTiledBg(0, 2, "static0");
-    NF_CreateTiledBg(1, 2, "static0");
     
     NF_LoadSpriteGfx("sprite/newGame", 0, 64, 32);
     NF_LoadSpritePal("sprite/newGame", 0);
@@ -52,6 +46,19 @@ int menuCreate()
     NF_VramSpritePal(1, 3, 3);
     NF_VramSpriteGfx(1, 4, 4, false);
     NF_VramSpritePal(1, 4, 4);
+    
+    NF_LoadRawSound("sfx/darknessmusic", 0, 8000, 0);
+    NF_LoadRawSound("sfx/static", 1, 11025, 0);
+    NF_LoadRawSound("sfx/blip", 2, 11025, 0);
+    
+    REG_BLDCNT = BLEND_ALPHA | BLEND_SRC_BG2 | BLEND_DST_BG3;
+    REG_BLDALPHA = 0x05 | (0x0F << 8);
+    
+    NF_CreateTiledBg(0, 3, "titleFred");
+    NF_CreateTiledBg(0, 0, "logo");
+    
+    NF_CreateTiledBg(0, 2, "static0");
+    NF_CreateTiledBg(1, 2, "static0");
 
     NF_CreateSprite(1, 0, 0, 0, 96, 32);
     NF_CreateSprite(1, 1, 1, 1, 96, 64);
@@ -61,20 +68,8 @@ int menuCreate()
 
     NF_EnableSpriteRotScale(1, 4, 4, false);
 
-    // audio
-    
-    NF_LoadRawSound("sfx/darknessmusic", 0, 8000, 0);
     NF_PlayRawSound(0, 127, 64, true, 0);
-
-    NF_LoadRawSound("sfx/static", 1, 11025, 0);
     NF_PlayRawSound(1, 64, 64, false, 0);
-    
-    NF_LoadRawSound("sfx/blip", 2, 11025, 0);
-
-    // alpha
-
-    REG_BLDCNT = BLEND_ALPHA | BLEND_SRC_BG2 | BLEND_DST_BG3;
-    REG_BLDALPHA = 0x05 | (0x0F << 8);
 
     return 0;
 }
