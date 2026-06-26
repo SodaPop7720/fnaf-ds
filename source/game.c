@@ -163,6 +163,7 @@ int onPostCreate()
     NF_LoadRawSound("sfx/error", 8, 11025, 0);
     NF_LoadRawSound("sfx/freddy", 9, 11025, 0);
     NF_LoadRawSound("sfx/walk", 10, 11025, 0);
+    NF_LoadRawSound("sfx/power", 11, 11025, 0);
 
     whoGotU = "freddy";
 
@@ -239,6 +240,7 @@ bool prev_rdoor = false;
 bool prev_rdoorlight = false;
 
 bool gotJumped = false;
+bool powerOut = false;
 
 touchPosition touch_position = { 0 };
 
@@ -252,7 +254,8 @@ int foxyAttack()
     }
     else
     {
-        gotJumped = true; whoGotU = "foxy";
+        gotJumped = true; 
+        whoGotU = "foxy";
     }
     
     return 0;
@@ -733,8 +736,11 @@ int onUpdate()
         }
 
         power -= 0.0015 * usage;
-        if (power < 1)
+        if (power <= 1)
+        {
             power = 1;
+            powerOut = true;
+        }
         
         char mytext[128];
         snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d          ", ceil(power - 1), usage);
@@ -864,6 +870,7 @@ int onUpdate()
     bonnieLocation = 0;
     chicaLocation = 0;
     foxyPhase = 0;
+    powerOut = false;
 
     if (gotJumped) gameOver(); else sixAMScreen();
 

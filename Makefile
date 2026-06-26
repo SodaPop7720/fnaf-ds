@@ -11,10 +11,9 @@ ARM_NONE_EABI_PATH	?= $(WONDERFUL_TOOLCHAIN)/toolchain/gcc-arm-none-eabi/bin/
 # User config
 # ===========
 
-NAME		:= fnaf_ds
+NAME		:= FNAFDS
 GAME_TITLE	:= Five Nights At Freddy's
-GAME_SUBTITLE	:= Scott Cawthon
-GAME_AUTHOR	:= Port by SodaPop7720
+GAME_AUTHOR	:= Scott Cawthon
 GAME_ICON	:= icon.bmp
 
 # Source code paths
@@ -285,3 +284,11 @@ $(SOURCES_S) $(SOURCES_C) $(SOURCES_CPP): $(HEADERS_ASSETS)
 # --------------------------------------
 
 -include $(DEPS)
+
+# Illusion of real nintendo rom or smth
+# --------------------------------------
+
+fixheader:
+	@printf "FNAFDS\0\0\0\0\0\0\0" | dd of=$(ROM) bs=1 seek=0 count=12 conv=notrunc
+
+all: $(ROM) fixheader
