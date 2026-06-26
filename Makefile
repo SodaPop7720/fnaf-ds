@@ -288,7 +288,7 @@ $(SOURCES_S) $(SOURCES_C) $(SOURCES_CPP): $(HEADERS_ASSETS)
 # Illusion of real nintendo rom or smth
 # --------------------------------------
 
-fixheader:
+sillyshit:
 	@printf "FNAFDS\0\0\0\0\0\0\0" | dd of=$(ROM) bs=1 seek=0 count=12 conv=notrunc
 
-all: $(ROM) fixheader
+all: $(ROM) sillyshit
