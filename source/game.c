@@ -164,6 +164,7 @@ int onPostCreate()
     NF_LoadRawSound("sfx/freddy", 9, 11025, 0);
     NF_LoadRawSound("sfx/walk", 10, 11025, 0);
     NF_LoadRawSound("sfx/power", 11, 11025, 0);
+    NF_LoadRawSound("sfx/musicbox", 12, 11025, 0);
 
     whoGotU = "freddy";
 
@@ -219,7 +220,7 @@ int onPostCreate()
 int officeX = 50;
 float camX = 25;
 int scrollSpeed = 3;
-float power = 1;
+float power = 100;
 int usage = 1;
 
 bool foxyRunning = false;
@@ -452,6 +453,91 @@ int ohNoPowerOut()
     NF_PlayRawSound(11, 100, 64, false, 0);
     NF_CreateTiledBg(0, 3, "office_power");
 
+    return 0;
+}
+
+int powerOutTimer = 0;
+int powerOutEventFails = 0;
+int powerOutPhase = 0;
+
+int powerOutEvents()
+{
+    if (powerOutPhase == 0)
+    {
+        if (powerOutTimer < 300)
+        {
+            powerOutTimer += 1;
+            return 0;
+        }
+
+        if (rand() % 5 == 0 || powerOutEventFails == 3)
+        {
+            powerOutEventFails = 0;
+        }
+        else
+        {
+            powerOutEventFails += 1;
+            powerOutTimer = 0;
+            return 0;
+        }
+
+        NF_PlayRawSound(12, 100, 64, false, 0);
+
+        powerOutPhase = 1;
+        powerOutTimer = 0;
+        return 0;
+    }
+    if (powerOutPhase == 1)
+    {
+        if (powerOutTimer < 300)
+        {
+            powerOutTimer += 1;
+            return 0;
+        }
+
+        if (rand() % 5 == 0 || powerOutEventFails == 3)
+        {
+            powerOutEventFails = 0;
+        }
+        else
+        {
+            powerOutEventFails += 1;
+            powerOutTimer = 0;
+            return 0;
+        }
+
+        soundDisable();
+        soundEnable();
+        
+        NF_CreateTiledBg(0, 3, "camNothing");
+
+        powerOutPhase = 2;
+        powerOutTimer = 0;
+        return 0;
+    }
+    if (powerOutPhase == 2)
+    {
+        if (powerOutTimer < 120)
+        {
+            powerOutTimer += 1;
+            return 0;
+        }
+
+        if (rand() % 5 == 0 || powerOutEventFails == 9)
+        {
+            powerOutEventFails = 0;
+        }
+        else
+        {
+            powerOutEventFails += 1;
+            powerOutTimer = 0;
+            return 0;
+        }
+
+        powerOutPhase = 3;
+        powerOutTimer = 0;
+        return 0;
+    }
     return 0;
 }
 
@@ -739,6 +825,12 @@ int onUpdate()
         if (gotJumped)
             break;
 
+        if (powerOutPhase == 3)
+        {
+            gotJumped = true;
+            break;
+        }
+
         daTimeShit();
         if (timeAM > 5)
             break;
@@ -779,6 +871,8 @@ int onUpdate()
                 ohNoPowerOut();
             }
         }
+
+        if (powerOut) powerOutEvents();
         
         char mytext[128];
         snprintf(mytext, sizeof(mytext), "Power Left: %d%%     \n Usage: %d          ", abs(ceil(power - 1)), usage);
@@ -913,6 +1007,9 @@ int onUpdate()
     chicaLocation = 0;
     foxyPhase = 0;
     powerOut = false;
+    powerOutTimer = 0;
+    powerOutEventFails = 0;
+    powerOutPhase = 0;
 
     if (gotJumped) gameOver(); else sixAMScreen();
 
