@@ -219,7 +219,7 @@ int onPostCreate()
 int officeX = 50;
 float camX = 25;
 int scrollSpeed = 3;
-float power = 100;
+float power = 1;
 int usage = 1;
 
 bool foxyRunning = false;
@@ -423,6 +423,38 @@ int updateCams()
     return 0;
 }
 
+int ohNoPowerOut()
+{
+    if (usingCams)
+    {
+        NF_PlayRawSound(3, 127, 64, false, 0);
+        usingCams = false;
+
+        NF_ShowBg(0, 1);
+        NF_HideBg(0, 2);
+        NF_HideBg(1, 3);
+    }
+
+    soundKill(0);
+
+    if (ldoor || rdoor) NF_PlayRawSound(2, 127, 64, false, 0);
+
+    ldoor = false;
+    rdoor = false;
+
+    ldoorlight = false;
+    rdoorlight = false;
+    prev_ldoorlight = ldoorlight;
+    prev_rdoorlight = rdoorlight;
+    
+    NF_MoveSprite(0, 0, 256, 0);
+
+    NF_PlayRawSound(11, 100, 64, false, 0);
+    NF_CreateTiledBg(0, 3, "office_power");
+
+    return 0;
+}
+
 int onUpdate()
 {
     while (1)
@@ -482,7 +514,7 @@ int onUpdate()
                     officeX = 103;
             }
 
-            if (keys_down & KEY_A)
+            if (keys_down & KEY_A && !powerOut)
             {
                 if (bonnieLocation <= 6 && chicaLocation <= 6) NF_PlayRawSound(2, 127, 64, false, 0);
 
@@ -510,7 +542,7 @@ int onUpdate()
                 }
             }
 
-            if (keys_down & KEY_B)
+            if (keys_down & KEY_B && !powerOut)
             {
                 if (lookingLeft)
                 {
@@ -589,7 +621,7 @@ int onUpdate()
 
         checkAnimatronics();
 
-        if (keys_down & KEY_UP)
+        if (keys_down & KEY_UP && !powerOut)
         {
             NF_PlayRawSound(3, 127, 64, false, 0);
 
@@ -696,10 +728,13 @@ int onUpdate()
             NF_ScrollBg(0, 3, (camX * 2), 160);
         }
         
-        freddyTime();
-        bonnieTime();
-        chicaTime();
-        foxyTime();
+        if (!powerOut)
+        {
+            freddyTime();
+            bonnieTime();
+            chicaTime();
+            foxyTime();
+        }
 
         if (gotJumped)
             break;
@@ -735,18 +770,25 @@ int onUpdate()
             usage += 1;
         }
 
-        power -= 0.0015 * usage;
-        if (power <= 1)
+        if (!powerOut)
         {
-            power = 1;
-            powerOut = true;
+            power -= 0.0015 * usage;
+            if (power <= 0)
+            {
+                powerOut = true;
+                ohNoPowerOut();
+            }
         }
         
         char mytext[128];
-        snprintf(mytext, sizeof(mytext), "Power Left: %0.0f%%     \n Usage: %d          ", ceil(power - 1), usage);
-        NF_WriteText(0, 0, 1, 1, mytext);
+        snprintf(mytext, sizeof(mytext), "Power Left: %d%%     \n Usage: %d          ", abs(ceil(power - 1)), usage);
+        if (powerOut) NF_WriteText(0, 0, 1, 1, "                       \n                    "); else NF_WriteText(0, 0, 1, 1, mytext);
 
-        if (!usingCams) // yes the spaces are required because the ds is weird
+        if (powerOut)
+        {
+            NF_WriteText(1, 0, 1, 1, "         \n                              \n                   \n                 \n                ");
+        }
+        else if (!usingCams) // yes the spaces are required because the ds is weird
         {
             NF_WriteText(1, 0, 1, 1, "Controls:\n L and R: Look Around         \n A: Close Door     \n B: Check Lights \n Up: Open Camera");
         }
@@ -844,7 +886,7 @@ int onUpdate()
     NF_DeleteTextLayer(0, 0);
     NF_DeleteTextLayer(1, 0);
 
-    soundKill(0);
+    if (!powerOut) soundKill(0);
     NF_ResetRawSoundBuffers();
     
     // resetting all vars
