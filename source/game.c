@@ -492,6 +492,12 @@ int powerOutEvents()
         if (powerOutTimer < 300)
         {
             powerOutTimer += 1;
+
+            if (rand() % 2 == 0)
+                NF_CreateTiledBg(0, 3, "office_powerfred");
+            else
+                NF_CreateTiledBg(0, 3, "office_power");
+                
             return 0;
         }
 
@@ -803,16 +809,6 @@ int onUpdate()
                 updateCams();
             }
         }
-
-        if (!usingCams)
-        {
-            NF_ScrollBg(0, 1, (officeX * 2), 160);
-            NF_ScrollBg(0, 3, (officeX * 2), 160);
-        }
-        else
-        {
-            NF_ScrollBg(0, 3, (camX * 2), 160);
-        }
         
         if (!powerOut)
         {
@@ -873,6 +869,16 @@ int onUpdate()
         }
 
         if (powerOut) powerOutEvents();
+
+        if (!usingCams)
+        {
+            NF_ScrollBg(0, 1, (officeX * 2), 160);
+            NF_ScrollBg(0, 3, (officeX * 2), 160);
+        }
+        else
+        {
+            NF_ScrollBg(0, 3, (camX * 2), 160);
+        }
         
         char mytext[128];
         snprintf(mytext, sizeof(mytext), "Power Left: %d%%     \n Usage: %d          ", abs(ceil(power - 1)), usage);
