@@ -48,6 +48,8 @@ int showNightNumber()
     
     NF_ResetRawSoundBuffers();
     
+    coolSwagTimer = 0;
+
     onCreate();
     onPostCreate();
     onUpdate();

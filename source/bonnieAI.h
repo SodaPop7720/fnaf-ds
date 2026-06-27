@@ -5,6 +5,7 @@
 
 extern int bonnieLocation;
 
+int bonnieLoad();
 int bonnieTime();
 
 #endif 

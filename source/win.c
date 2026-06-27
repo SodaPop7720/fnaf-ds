@@ -8,6 +8,7 @@
 #include <nf_lib.h>
 
 #include "a.h"
+#include "ending.h"
 #include "game.h"
 #include "mainmenu.h"
 #include "nightNumber.h"
@@ -84,6 +85,7 @@ int sixAMScreen()
     }
 
     NF_DeleteTiledBg(0, 0);
+    NF_UnloadTiledBg("6am");
     NF_ResetTiledBgBuffers();
     
     NF_UnloadSpriteGfx(0);
@@ -100,10 +102,9 @@ int sixAMScreen()
         saveGame();
     }
 
-    if (daSaveData.curNight > 4)
+    if (daSaveData.curNight > 5)
     {
-        menuCreate();
-        menuUpdate();
+        endingStuff();
     }
     else
     {

@@ -19,17 +19,31 @@
 int foxyPhase = 0;
 double foxyStall = 0.0;
 
+time_t foxyTimer = 0;
+
+static time_t foxylast = 0;
+static time_t foxykilllast = 0;
+static time_t foxyrunlast = 0;
+
+int foxyLoad()
+{
+    foxylast = foxyTimer;
+    foxykilllast = foxyTimer;
+    foxyrunlast = foxyTimer;
+    return 0;
+}
+
 int foxyTime()
 {
-    time_t foxyTimer = time(NULL);
+    foxyTimer = time(NULL);
 
-    static time_t foxylast = 0;
+    foxylast = 0;
     if (foxylast == 0) foxylast = foxyTimer;
 
-    static time_t foxykilllast = 0;
+    foxykilllast = 0;
     if (foxykilllast == 0) foxykilllast = foxyTimer;
 
-    static time_t foxyrunlast = 0;
+    foxyrunlast = 0;
     if (foxyrunlast == 0) foxyrunlast = foxyTimer;
     
     if (usingCams)

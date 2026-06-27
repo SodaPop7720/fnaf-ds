@@ -146,6 +146,11 @@ int onCreate()
 
 int onPostCreate()
 {
+    freddyLoad();
+    bonnieLoad();
+    chicaLoad();
+    foxyLoad();
+
     NF_UnloadSpriteGfx(1);
     NF_UnloadSpritePal(1);
     NF_FreeSpriteGfx(0, 1);
@@ -906,7 +911,7 @@ int onUpdate()
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
 
-        //break; //used to test shit
+        if (daSaveData.curNight < 7) break; //used to test shit
     }
     
     NF_DeleteTiledBg(0, 1);

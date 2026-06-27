@@ -32,12 +32,24 @@ int freddyCountdown = 1000;
 6 = he gonna kill u
 */
 
+time_t freddyTimer = 0;
+
+static time_t freddylast = 0;
+static time_t freddykilllast = 0;
+
+int freddyLoad()
+{
+    freddylast = freddyTimer;
+    freddykilllast = freddyTimer;
+    return 0;
+}
+
 int freddyTime()
 {
-    time_t freddyTimer = time(NULL);
+    freddyTimer = time(NULL);
 
-    static time_t freddylast = 0;
-    static time_t freddykilllast = 0;
+    freddylast = 0;
+    freddykilllast = 0;
 
     if (freddylast == 0) freddylast = freddyTimer;
     if (freddykilllast == 0) freddykilllast = freddyTimer;

@@ -29,11 +29,20 @@ int bonnieLocation = 0;
 7 = he gonna kill u
 */
 
+time_t bonnieTimer = 0;
+static time_t bonnielast = 0;
+
+int bonnieLoad()
+{
+    bonnielast = bonnieTimer;
+    return 0;
+}
+
 int bonnieTime()
 {
-    time_t bonnieTimer = time(NULL);
+    bonnieTimer = time(NULL);
 
-    static time_t bonnielast = 0;
+    bonnielast = 0;
     if (bonnielast == 0) bonnielast = bonnieTimer;
     
     if (difftime(bonnieTimer, bonnielast) >= 4.97)

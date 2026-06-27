@@ -5,6 +5,7 @@
 
 extern int foxyPhase;
 
+int foxyLoad();
 int foxyTime();
 
 #endif 

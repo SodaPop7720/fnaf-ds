@@ -5,6 +5,7 @@
 
 extern int freddyLocation;
 
+int freddyLoad();
 int freddyTime();
 int freddyMove();
 

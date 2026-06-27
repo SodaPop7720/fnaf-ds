@@ -29,11 +29,20 @@ int chicaLocation = 0;
 7 = she gonna kill u
 */
 
+time_t chicaTimer = 0;
+static time_t chicalast = 0;
+
+int chicaLoad()
+{
+    chicalast = chicaTimer;
+    return 0;
+}
+
 int chicaTime()
 {
-    time_t chicaTimer = time(NULL);
+    chicaTimer = time(NULL);
 
-    static time_t chicalast = 0;
+    chicalast = 0;
     if (chicalast == 0) chicalast = chicaTimer;
     
     if (difftime(chicaTimer, chicalast) >= 4.98)

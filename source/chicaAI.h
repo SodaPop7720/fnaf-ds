@@ -5,6 +5,7 @@
 
 extern int chicaLocation;
 
+int chicaLoad();
 int chicaTime();
 
 #endif 
