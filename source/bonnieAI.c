@@ -34,6 +34,7 @@ static time_t bonnielast = 0;
 
 int bonnieLoad()
 {
+    bonnieTimer = time(NULL);
     bonnielast = bonnieTimer;
     return 0;
 }
@@ -41,9 +42,6 @@ int bonnieLoad()
 int bonnieTime()
 {
     bonnieTimer = time(NULL);
-
-    bonnielast = 0;
-    if (bonnielast == 0) bonnielast = bonnieTimer;
     
     if (difftime(bonnieTimer, bonnielast) >= 4.97)
     {

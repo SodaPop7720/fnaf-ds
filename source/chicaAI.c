@@ -34,6 +34,7 @@ static time_t chicalast = 0;
 
 int chicaLoad()
 {
+    chicaTimer = time(NULL);
     chicalast = chicaTimer;
     return 0;
 }
@@ -41,9 +42,6 @@ int chicaLoad()
 int chicaTime()
 {
     chicaTimer = time(NULL);
-
-    chicalast = 0;
-    if (chicalast == 0) chicalast = chicaTimer;
     
     if (difftime(chicaTimer, chicalast) >= 4.98)
     {

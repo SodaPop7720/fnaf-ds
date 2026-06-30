@@ -27,6 +27,7 @@ static time_t foxyrunlast = 0;
 
 int foxyLoad()
 {
+    foxyTimer = time(NULL);
     foxylast = foxyTimer;
     foxykilllast = foxyTimer;
     foxyrunlast = foxyTimer;
@@ -36,15 +37,6 @@ int foxyLoad()
 int foxyTime()
 {
     foxyTimer = time(NULL);
-
-    foxylast = 0;
-    if (foxylast == 0) foxylast = foxyTimer;
-
-    foxykilllast = 0;
-    if (foxykilllast == 0) foxykilllast = foxyTimer;
-
-    foxyrunlast = 0;
-    if (foxyrunlast == 0) foxyrunlast = foxyTimer;
     
     if (usingCams)
     {

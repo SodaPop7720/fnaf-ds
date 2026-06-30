@@ -911,7 +911,7 @@ int onUpdate()
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
 
-        if (daSaveData.curNight < 7) break; //used to test shit
+        // if (daSaveData.curNight < 7) break; //used to test shit
     }
     
     NF_DeleteTiledBg(0, 1);

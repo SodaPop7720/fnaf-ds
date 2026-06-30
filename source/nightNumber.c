@@ -23,7 +23,7 @@ int showNightNumber()
 
     NF_CreateSprite(0, 0, 0, 0, 96, 80);
     NF_SpriteFrame(0, 0, daSaveData.curNight - 1);
-    NF_EnableSpriteRotScale(0, 0, 0, false);
+    //NF_EnableSpriteRotScale(0, 0, 0, false);
     
     NF_LoadRawSound("sfx/blip", 0, 11025, 0);
     NF_PlayRawSound(0, 100, 64, false, 0);
@@ -31,11 +31,11 @@ int showNightNumber()
     while (coolSwagTimer < 150)
     {
         coolSwagTimer++;
+
+        swiWaitForVBlank();
         
         NF_SpriteOamSet(0);
         NF_SpriteOamSet(1);
-
-        swiWaitForVBlank();
 
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
@@ -45,7 +45,8 @@ int showNightNumber()
     NF_UnloadSpritePal(0);
     NF_FreeSpriteGfx(0, 0);
     NF_DeleteSprite(0, 0);
-    
+
+    NF_ResetSpriteBuffers();
     NF_ResetRawSoundBuffers();
     
     coolSwagTimer = 0;

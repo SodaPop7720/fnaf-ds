@@ -92,6 +92,8 @@ int sixAMScreen()
     NF_UnloadSpritePal(0);
     NF_FreeSpriteGfx(0, 0);
     NF_DeleteSprite(0, 0);
+    
+    NF_ResetSpriteBuffers();
 
     soundKill(0);
     NF_ResetRawSoundBuffers();

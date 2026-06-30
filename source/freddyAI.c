@@ -39,6 +39,7 @@ static time_t freddykilllast = 0;
 
 int freddyLoad()
 {
+    freddyTimer = time(NULL);
     freddylast = freddyTimer;
     freddykilllast = freddyTimer;
     return 0;
@@ -47,12 +48,6 @@ int freddyLoad()
 int freddyTime()
 {
     freddyTimer = time(NULL);
-
-    freddylast = 0;
-    freddykilllast = 0;
-
-    if (freddylast == 0) freddylast = freddyTimer;
-    if (freddykilllast == 0) freddykilllast = freddyTimer;
     
     if (difftime(freddyTimer, freddylast) >= 3.02 && bonnieLocation > 0 && chicaLocation > 0)
     {
