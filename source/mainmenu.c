@@ -140,6 +140,15 @@ int menuUpdate()
             if (daMenuSelection > 4) daMenuSelection = 1;
         }
 
+        if (keys_down & KEY_X) // cheat code :3
+        {
+            if (keys_down & KEY_Y)
+            {
+                daMenuSelection = 4;
+                break;
+            }
+        }
+
         switch (daMenuSelection)
         {
             case 1:
@@ -235,9 +244,7 @@ int menuUpdate()
             daSaveData.curNight = 1;
             saveGame();
 
-            newspaperStuff(); 
-            //customCreate();
-            //customUpdate();
+            newspaperStuff();
             break;
         case 2: 
             setBrightness(3, brightness);

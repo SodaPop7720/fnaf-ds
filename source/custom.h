@@ -6,4 +6,9 @@
 int customCreate();
 int customUpdate();
 
+extern int freddyCustomAI;
+extern int bonnieCustomAI;
+extern int chicaCustomAI;
+extern int foxyCustomAI;
+
 #endif 

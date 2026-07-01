@@ -10,11 +10,12 @@
 
 #include <nf_lib.h>
 
-#include "daTime.h"
-#include "freddyAI.h"
 #include "bonnieAI.h"
 #include "chicaAI.h"
+#include "custom.h"
+#include "daTime.h"
 #include "foxyAI.h"
+#include "freddyAI.h"
 #include "game.h"
 #include "gameover.h"
 #include "savedata.h"
@@ -216,10 +217,10 @@ int onPostCreate()
             foxyAILevel = 16;
             break;
         case 7:
-            freddyAILevel = 20;
-            bonnieAILevel = 20;
-            chicaAILevel = 20;
-            foxyAILevel = 20;
+            freddyAILevel = freddyCustomAI;
+            bonnieAILevel = bonnieCustomAI;
+            chicaAILevel = chicaCustomAI;
+            foxyAILevel = foxyCustomAI;
             break;
     }
 
