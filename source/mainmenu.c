@@ -10,6 +10,7 @@
 #include <nf_lib.h>
 
 #include "a.h"
+#include "custom.h"
 #include "mainmenu.h"
 #include "newspaper.h"
 #include "nightnumber.h"
@@ -235,6 +236,8 @@ int menuUpdate()
             saveGame();
 
             newspaperStuff(); 
+            //customCreate();
+            //customUpdate();
             break;
         case 2: 
             setBrightness(3, brightness);
@@ -268,18 +271,11 @@ int menuUpdate()
             showNightNumber(); 
             break;
         case 4: 
-            setBrightness(3, brightness);
-            
-            soundKill(0);
-            NF_ResetRawSoundBuffers();
-
-            soundDisable();
-            soundEnable();
-
             daSaveData.curNight = 7;
             saveGame();
 
-            showNightNumber(); 
+            customCreate();
+            customUpdate();
             break;
     }
 

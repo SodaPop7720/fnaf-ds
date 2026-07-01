@@ -144,8 +144,12 @@ int onCreate()
     return 0;
 }
 
+bool showHints = true;
+
 int onPostCreate()
 {
+    if (daSaveData.curNight > 1) showHints = false;
+
     freddyLoad();
     bonnieLoad();
     chicaLoad();
@@ -639,6 +643,11 @@ int onUpdate()
                 }
             }
 
+            if (keys_down & KEY_X)
+            {
+                showHints = false;
+            }
+
             if (keys_down & KEY_B && !powerOut)
             {
                 if (lookingLeft)
@@ -889,17 +898,17 @@ int onUpdate()
         snprintf(mytext, sizeof(mytext), "Power Left: %d%%     \n Usage: %d          ", abs(ceil(power - 1)), usage);
         if (powerOut) NF_WriteText(0, 0, 1, 1, "                       \n                    "); else NF_WriteText(0, 0, 1, 1, mytext);
 
-        if (powerOut)
+        if (powerOut || !showHints)
         {
-            NF_WriteText(1, 0, 1, 1, "         \n                              \n                   \n                 \n                ");
+            NF_WriteText(1, 0, 1, 1, "         \n                              \n                   \n                 \n                 \n                  ");
         }
         else if (!usingCams) // yes the spaces are required because the ds is weird
         {
-            NF_WriteText(1, 0, 1, 1, "Controls:\n L and R: Look Around         \n A: Close Door     \n B: Check Lights \n Up: Open Camera");
+            NF_WriteText(1, 0, 1, 1, "Controls:\n L and R: Look Around         \n A: Close Door     \n B: Check Lights \n Up: Open Camera \n X: Hide Controls ");
         }
         else
         {
-            NF_WriteText(1, 0, 1, 1, "Controls:\n Touch Screen: Switch Cameras \n Up: Close Camera  \n                 \n                ");
+            NF_WriteText(1, 0, 1, 1, "Controls:\n Touch Screen: Switch Cameras \n Up: Close Camera  \n                 \n                 \n                  ");
         }
         
         NF_UpdateTextLayers();
@@ -1000,6 +1009,7 @@ int onUpdate()
     scrollSpeed = 3;
     power = 100;
     usage = 1;
+    timeAM = 0;
     foxyRunning = false;
     usingCams = false;
     camName = "cam1a_fbc";
