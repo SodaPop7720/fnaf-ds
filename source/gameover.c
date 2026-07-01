@@ -83,6 +83,11 @@ int gameOver()
     NF_UnloadTiledBg("static3");
     NF_ResetTiledBgBuffers();
     
+    NF_LoadTextFont("fnt/default", "top", 256, 256, 0);
+    NF_LoadTextFont("fnt/default", "bottom", 256, 256, 0);
+    NF_CreateTextLayer(0, 0, 0, "top");
+    NF_CreateTextLayer(1, 0, 0, "bottom");
+    
     NF_LoadTiledBg("bg/gameOver", "gameOver", 256, 256);
     NF_CreateTiledBg(0, 1, "gameOver");
 
@@ -107,12 +112,21 @@ int gameOverImage()
     while (timerTillMenu < 300)
     {
         timerTillMenu += 1;
+        
+        char mytext[128];
+        snprintf(mytext, sizeof(mytext), "You died to %s!", whoGotU);
+        NF_WriteText(1, 0, 1, 1, mytext);
+        
+        NF_UpdateTextLayers();
         swiWaitForVBlank();
     }
 
     NF_DeleteTiledBg(0, 1);
     NF_UnloadTiledBg("gameOver");
     NF_ResetTiledBgBuffers();
+    
+    NF_DeleteTextLayer(0, 0);
+    NF_DeleteTextLayer(1, 0);
 
     NF_ResetRawSoundBuffers();
 
