@@ -21,6 +21,9 @@ int menuCreate()
     // load the shit
     NF_LoadTiledBg("bg/titleFred0", "titleFred", 256, 256);
     NF_LoadTiledBg("bg/logo", "logo", 256, 256);
+    NF_LoadTiledBg("bg/1star", "1star", 256, 256);
+    NF_LoadTiledBg("bg/2star", "2star", 256, 256);
+    NF_LoadTiledBg("bg/3star", "3star", 256, 256);
     NF_LoadTiledBg("bg/static0", "static0", 256, 256);
     NF_LoadTiledBg("bg/static1", "static1", 256, 256);
     NF_LoadTiledBg("bg/static2", "static2", 256, 256);
@@ -57,6 +60,10 @@ int menuCreate()
     
     NF_CreateTiledBg(0, 3, "titleFred");
     NF_CreateTiledBg(0, 0, "logo");
+
+    if (daSaveData.curNight > 5) NF_CreateTiledBg(0, 1, "1star");
+    if (daSaveData.curNight > 6) NF_CreateTiledBg(0, 1, "2star");
+    if (daSaveData.curNight > 7) NF_CreateTiledBg(0, 1, "3star");
     
     NF_CreateTiledBg(0, 2, "static0");
     NF_CreateTiledBg(1, 2, "static0");
@@ -202,11 +209,15 @@ int menuUpdate()
     }
 
     NF_DeleteTiledBg(0, 0);
+    if (daSaveData.curNight > 5) NF_DeleteTiledBg(0, 1);
     NF_DeleteTiledBg(0, 2);
     NF_DeleteTiledBg(0, 3);
     NF_DeleteTiledBg(1, 2);
     NF_UnloadTiledBg("titleFred");
     NF_UnloadTiledBg("logo");
+    NF_UnloadTiledBg("1star");
+    NF_UnloadTiledBg("2star");
+    NF_UnloadTiledBg("3star");
     NF_UnloadTiledBg("static0");
     NF_UnloadTiledBg("static1");
     NF_UnloadTiledBg("static2");

@@ -98,7 +98,7 @@ int sixAMScreen()
     soundKill(0);
     NF_ResetRawSoundBuffers();
 
-    if (daSaveData.curNight < 7)
+    if (daSaveData.curNight < 8)
     {
         daSaveData.curNight += 1;
         saveGame();

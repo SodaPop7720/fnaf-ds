@@ -586,6 +586,8 @@ int powerOutEvents()
 
         powerOutPhase = 3;
         powerOutTimer = 0;
+        whoGotU = "freddy";
+
         return 0;
     }
     return 0;
@@ -998,7 +1000,7 @@ int onUpdate()
         oamUpdate(&oamMain);
         oamUpdate(&oamSub);
 
-        // if (daSaveData.curNight < 7) break; //used to test shit
+        //break; //used to test shit
     }
     
     NF_DeleteTiledBg(0, 1);
