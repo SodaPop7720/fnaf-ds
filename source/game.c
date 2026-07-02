@@ -18,6 +18,7 @@
 #include "freddyAI.h"
 #include "game.h"
 #include "gameover.h"
+#include "golden.h"
 #include "savedata.h"
 #include "win.h"
 
@@ -67,6 +68,9 @@ int onCreate()
     NF_LoadTiledBg("bg/officeChica", "office_chica", 512, 512);
     NF_LoadTiledBg("bg/officePowerOut", "office_power", 512, 512);
     NF_LoadTiledBg("bg/officePowerOutFreddy", "office_powerfred", 512, 512);
+    
+    NF_LoadTiledBg("bg/nothing", "goldenFreddyOff", 512, 512);
+    NF_LoadTiledBg("bg/goldenFreddy", "goldenFreddy", 512, 512);
 
     NF_LoadTiledBg("bg/nothing", "doors_off", 512, 512);
     NF_LoadTiledBg("bg/LDoor", "doors_L", 512, 512);
@@ -130,8 +134,10 @@ int onCreate()
     NF_LoadTextFont("fnt/default", "bottom", 256, 256, 0);
     
     NF_CreateTiledBg(0, 3, "office_off");
+    NF_ScrollBg(0, 2, 100, 160);
     NF_ScrollBg(0, 3, 100, 160);
     NF_CreateTiledBg(0, 1, "doors_off");
+    NF_CreateTiledBg(0, 2, "goldenFreddyOff");
     NF_CreateTiledBg(1, 3, "minimap");
     NF_HideBg(1, 3);
 
@@ -142,14 +148,31 @@ int onCreate()
     NF_CreateTextLayer(0, 0, 0, "top");
     NF_CreateTextLayer(1, 0, 0, "bottom");
 
+    REG_BLDALPHA = 0x0F | (0x0F << 16);
+
     return 0;
 }
 
 bool showHints = true;
 
+bool goldenFreddyCanSpawn = false;
+bool goldenFreddy = false;
+bool goldenFreddyInOffice = false;
+int goldenFreddyKillTimer = 0;
+
+time_t gfTimer = 0;
+static time_t gflast = 0;
+
 int onPostCreate()
 {
     if (daSaveData.curNight > 1) showHints = false;
+
+    goldenFreddyCanSpawn = false;
+    goldenFreddy = false;
+    goldenFreddyInOffice = false;
+
+    gfTimer = time(NULL);
+    gflast = gfTimer;
 
     freddyLoad();
     bonnieLoad();
@@ -175,6 +198,7 @@ int onPostCreate()
     NF_LoadRawSound("sfx/walk", 10, 11025, 0);
     NF_LoadRawSound("sfx/power", 11, 11025, 0);
     NF_LoadRawSound("sfx/musicbox", 12, 11025, 0);
+    NF_LoadRawSound("sfx/gfreddy", 13, 11025, 0);
 
     whoGotU = "freddy";
 
@@ -343,6 +367,11 @@ int checkAnimatronics() // I know theres prolly a better way to do this but idga
         {
             camName = "cam2b_b";
         }
+        else if (goldenFreddyCanSpawn)
+        {
+            camName = "cam2b_g";
+            goldenFreddy = true;
+        }
         else 
         {
             camName = "cam2b";
@@ -436,6 +465,11 @@ int updateCams()
 
 int ohNoPowerOut()
 {
+    goldenFreddyCanSpawn = false;
+    goldenFreddy = false;
+    goldenFreddyInOffice = false;
+    goldenFreddyKillTimer = 0;
+
     if (usingCams)
     {
         NF_PlayRawSound(3, 127, 64, false, 0);
@@ -728,6 +762,16 @@ int onUpdate()
 
         checkAnimatronics();
 
+        gfTimer = time(NULL);
+        if (difftime(gfTimer, gflast) >= 1)
+        {
+            if ((rand() % 32768) == 0 && !goldenFreddy) // yes it is not actually 100000
+            {
+                goldenFreddyCanSpawn = true;
+            }
+            gflast = gfTimer;
+        }
+
         if (keys_down & KEY_UP && !powerOut)
         {
             NF_PlayRawSound(3, 127, 64, false, 0);
@@ -739,21 +783,49 @@ int onUpdate()
             if (usingCams)
             {
                 NF_HideBg(0, 1);
-                NF_ShowBg(0, 2);
+                NF_HideBg(0, 2);
                 NF_ShowBg(1, 3);
 
                 updateCams();
+
+                goldenFreddyInOffice = false;
+                goldenFreddyKillTimer = 0;
             }
             else
             {
                 NF_ShowBg(0, 1);
-                NF_HideBg(0, 2);
+                NF_ShowBg(0, 2);
                 NF_HideBg(1, 3);
+
+                if (goldenFreddy)
+                {
+                    goldenFreddyInOffice = true;
+                    goldenFreddy = false;
+                    goldenFreddyCanSpawn = false;
+                }
 
                 NF_CreateTiledBg(0, 3, "office_off");
 
+                if (goldenFreddyInOffice)
+                {
+                    NF_CreateTiledBg(0, 2, "goldenFreddy");
+                }
+                else
+                {
+                    NF_CreateTiledBg(0, 2, "goldenFreddyOff");
+                }
+
                 if (bonnieLocation > 6 || chicaLocation > 6) gotJumped = true;
             }
+        }
+
+        if (goldenFreddyInOffice && !usingCams)
+        {
+            goldenFreddyKillTimer += 1;
+        }
+        if (goldenFreddyKillTimer > 300)
+        {
+            break;
         }
         
         if (keys_held & KEY_TOUCH)
@@ -822,6 +894,10 @@ int onUpdate()
                 }
 
                 updateCams();
+                if (strcmp(camName, "cam2b_g") == 0)
+                {
+                    NF_PlayRawSound(13, 100, 64, false, 0);
+                }
             }
         }
         
@@ -888,6 +964,7 @@ int onUpdate()
         if (!usingCams)
         {
             NF_ScrollBg(0, 1, (officeX * 2), 160);
+            NF_ScrollBg(0, 2, (officeX * 2), 160);
             NF_ScrollBg(0, 3, (officeX * 2), 160);
         }
         else
@@ -1033,7 +1110,7 @@ int onUpdate()
     powerOutEventFails = 0;
     powerOutPhase = 0;
 
-    if (gotJumped) gameOver(); else sixAMScreen();
+    if (gotJumped) gameOver(); else if (goldenFreddyInOffice) goldenJumpscare(); else sixAMScreen();
 
     return 0;
 }
