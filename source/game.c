@@ -951,7 +951,7 @@ int onUpdate()
 
         if (!powerOut)
         {
-            power -= 0.0015 * usage;
+            power -= 0.0025 * usage;
             if (power <= 0)
             {
                 powerOut = true;

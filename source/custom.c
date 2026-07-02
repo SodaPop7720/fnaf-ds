@@ -8,6 +8,7 @@
 #include <nf_lib.h>
 
 #include "custom.h"
+#include "golden.h"
 #include "nightnumber.h"
 
 int custombrightness = -16;
@@ -160,7 +161,14 @@ int customUpdate()
     soundDisable();
     soundEnable();
     
-    showNightNumber(); 
+    if (freddyCustomAI == 1 && bonnieCustomAI == 9 && chicaCustomAI == 8 && foxyCustomAI == 7)
+    {
+        goldenJumpscare();
+    }
+    else
+    {
+        showNightNumber(); 
+    }
 
     return 0;
 }
