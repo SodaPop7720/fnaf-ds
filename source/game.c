@@ -1004,6 +1004,7 @@ int onUpdate()
     }
     
     NF_DeleteTiledBg(0, 1);
+    NF_DeleteTiledBg(0, 2);
     NF_DeleteTiledBg(0, 3);
     NF_DeleteTiledBg(1, 3);
 
